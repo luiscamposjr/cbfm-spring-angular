@@ -1,0 +1,16 @@
+<div class="container-fluid">
+	<nav class="navbar navbar-default navbar-fixed-top lc-navbar" role="navigation">
+		<img src="http://placehold.it/80x50" class="pull-left">
+		<a class="navbar-brand link-menu" href="./">CBFM Manager</a>
+		<ul class="nav navbar-nav">
+			<li ng-repeat="item in menu">
+				<a href="/#{{item.url}}" >{{item.label}}</a>
+			</li>			
+		</ul>
+
+		<!-- <div ng-controller="SessionController">
+			<button type="button" class="btn btn-default pull-right navbar-btn" ng-click="logout()">Logout</button>
+		</div>
+ -->
+	</nav>
+</div>
