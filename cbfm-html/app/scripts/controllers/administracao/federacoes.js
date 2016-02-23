@@ -16,15 +16,15 @@ app.controller('FederacoesController', ['$scope', '$http', 'federacoesService',
 		$scope.showFilter = false;
 		$scope.showForm = false;
 
-		// federacoesService.getFederacoes().success(function (data) {
-		// 			$scope.listaFederacoes = data.federacoes;
-		// 			$scope.showErrorMessage = false;
-		// 		}).error(function (data, status) {
-		// 			$scope.errorMessage = "Aconteceu um problema";
-		// 			$scope.errorStatus = status;
-		// 			$scope.showErrorMessage = true;
+		federacoesService.getFederacoes().success(function (data) {
+					$scope.listaFederacoes = data;
+					$scope.showErrorMessage = false;
+				}).error(function (data, status) {
+					$scope.errorMessage = "Aconteceu um problema";
+					$scope.errorStatus = status;
+					$scope.showErrorMessage = true;
 
-		// 		});
+				});
 
 	};
 
