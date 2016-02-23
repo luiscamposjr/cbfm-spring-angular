@@ -10,23 +10,29 @@ app.controller('FederacoesController', ['$scope', '$http', 'federacoesService',
 	$scope.errorStatus = "";
 
 	$scope.listaFederacoes = [];
+
 	
 	$scope.init = function (){
 
 		$scope.showFilter = false;
 		$scope.showForm = false;
 
-		federacoesService.getFederacoes().success(function (data) {
-					$scope.listaFederacoes = data;
-					$scope.showErrorMessage = false;
-				}).error(function (data, status) {
-					$scope.errorMessage = "Aconteceu um problema";
-					$scope.errorStatus = status;
-					$scope.showErrorMessage = true;
-
-				});
+		$scope.filter();
 
 	};
+
+	$scope.filter = function($filter){
+
+		federacoesService.getFederacoes().
+			then(function successCallback(response) {
+					$scope.listaFederacoes = response.data;
+					$scope.showErrorMessage = false;
+	  		}, function errorCallback(response) {
+					$scope.errorMessage = "Aconteceu um problema";
+					$scope.errorStatus = response.status;
+					$scope.showErrorMessage = true;
+	  		});
+	}
 
 	$scope.clickFilterTransition = function() {
 		$scope.showFilter = !$scope.showFilter;
