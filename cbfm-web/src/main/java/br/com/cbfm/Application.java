@@ -17,6 +17,7 @@ public class Application extends SpringBootServletInitializer{
 		return new ApplicationSecurity();
 	}
 	
+	
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
 

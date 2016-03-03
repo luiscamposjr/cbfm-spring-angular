@@ -75,6 +75,7 @@ public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
 //				,
 //				new NegatedRequestMatcher(new AntPathRequestMatcher("/rest/open*/**"))
 			)
+			
 		);
 		http.addFilterAfter(new CsrfTokenResponseCookieBindingFilter(), CsrfFilter.class); // CSRF tokens handling
 	}
