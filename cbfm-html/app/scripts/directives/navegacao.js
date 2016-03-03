@@ -6,7 +6,7 @@
  * @description
  * # navegacao
  */
-app.directive('navegacao', function(){
+angular.module(GLOBAL.nameApp).directive('navegacao', function(){
 
 	return {
 		restrict: 'E',
@@ -21,6 +21,6 @@ app.directive('navegacao', function(){
 			];
 		},
 		templateUrl: '/partials/navbar.html'
-	}
+	};
 
 });

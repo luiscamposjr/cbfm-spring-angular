@@ -1,6 +1,5 @@
-/*global app */
 'use strict';
-app.factory("federacoesService", function ($http) {
+angular.module(GLOBAL.nameApp).factory("federacoesService", function ($http) {
 
   var _getFederacoes = function () {
   	
@@ -10,6 +9,7 @@ app.factory("federacoesService", function ($http) {
 				});
 
   };
+
 
   return {
     getFederacoes: _getFederacoes

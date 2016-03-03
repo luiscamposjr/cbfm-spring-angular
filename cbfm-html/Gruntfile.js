@@ -35,23 +35,22 @@ module.exports = function (grunt) {
     less: {  
         development: {
           options: {
-            paths: [""]
+            paths: ['']
             },
           files: {
-              "<%= yeoman.app %>/styles/main.css": [ 
-                                                     "<%= yeoman.app %>/less/main.less", 
-                                                     "<%= yeoman.app %>/less/teste.less", 
-                                                     "<%= yeoman.app %>/less/testando.less"
+              '<%= yeoman.app %>/styles/main.css': [ 
+                                                     '<%= yeoman.app %>/less/main.less', 
+                                                     '<%= yeoman.app %>/less/login.less'
                                                     ]
             }
           },
         production: {
           options: {
-            paths: [""],
+            paths: [''],
             cleancss: true,
         },
           files: {
-            "dist/styles/main.css": "<%= yeoman.app %>/less/main.less"
+            'dist/styles/main.css': '<%= yeoman.app %>/less/main.less'
           }
         }
     },
@@ -63,7 +62,7 @@ module.exports = function (grunt) {
         tasks: ['wiredep']
       },
       js: {
-        files: ['<%= yeoman.app %>/scripts/{,*/}*.js'],
+        files: ['<%= yeoman.app %>/scripts/**/*.js'],
         tasks: ['newer:jshint:all', 'newer:jscs:all'],
         options: {
           livereload: '<%= connect.options.livereload %>'
@@ -156,7 +155,7 @@ module.exports = function (grunt) {
       all: {
         src: [
           'Gruntfile.js',
-          //'<%= yeoman.app %>/scripts/{,*/}*.js'
+          '<%= yeoman.app %>/scripts/**/*.js'
         ]
       },
       test: {
@@ -176,7 +175,7 @@ module.exports = function (grunt) {
       all: {
         src: [
           'Gruntfile.js',
-          '<%= yeoman.app %>/scripts/{,*/}*.js'
+          '<%= yeoman.app %>/scripts/**/*.js'
         ]
       },
       test: {

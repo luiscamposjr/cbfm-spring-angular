@@ -7,7 +7,7 @@
  * # MainCtrl
  * Controller of the cbfmHtmlApp
  */
-app.controller('MainCtrl', function () {
+angular.module(GLOBAL.nameApp).controller('MainCtrl', function () {
     
 
 

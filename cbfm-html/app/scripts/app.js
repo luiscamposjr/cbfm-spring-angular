@@ -8,14 +8,29 @@
  *
  * Main module of the application.
  */
-var app = angular
-  .module('cbfmHtmlApp', [
+
+(function(w) {
+  w.GLOBAL = {
+    nameApp: 'cbfmHtmlApp'
+  };
+
+})(window);
+
+angular
+  .module(GLOBAL.nameApp, [
     'ngCookies',
     'ngResource',
     'ngRoute'
   ]);
 
-  app.config(function ($routeProvider, $locationProvider) {
+angular.module(GLOBAL.nameApp).config(['$routeProvider', '$locationProvider', '$httpProvider', 
+    function ($routeProvider, $locationProvider, $httpProvider) {
+
+    $httpProvider.defaults.withCredentials = true;
+    // Tough luck: the default cookie-to-header mechanism is not working for cross-origin requests!
+    $httpProvider.defaults.xsrfCookieName = 'CSRF-TOKEN'; // The name of the cookie sent by the server
+    $httpProvider.defaults.xsrfHeaderName = 'X-CSRF-TOKEN'; // The default header name picked up by Spring Security
+
     $routeProvider
       .when('/', {
         templateUrl: 'views/main.html',
@@ -25,10 +40,18 @@ var app = angular
       .when('/federacoes', {
         templateUrl: 'views/administracao/federacoes.html',
         controller: 'FederacoesController',
+        controllerAs: 'Federacoes'
+      })
+      .when('/login', {
+        templateUrl: 'views/login/login.html',
+        controller: 'LoginController',
+        controllerAs: 'Login'
       })
       .otherwise({
         redirectTo: '/'
       });
 
       $locationProvider.html5Mode(false);
-  });
+  }]);
+
+
