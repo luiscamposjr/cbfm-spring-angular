@@ -13,6 +13,15 @@
   margin-top: -19px;
   margin-left: 5px;
 }
+.borderless {
+  border: none;
+}
+.simplepadding {
+  padding: 10px;
+}
+.simpleborder {
+  border: 1px solid #CCC;
+}
 .filter-container {
   border: 1px solid #CCC;
   margin: -16px -16px 0px -16px;

@@ -1,7 +1,7 @@
 'use strict';
 angular.module(GLOBAL.nameApp)
-	.controller('FederacoesController', ['$scope', 'federacoesService',
-		function($scope, federacoesService) {
+	.controller('FederacoesController', ['$scope', 'federacoesService', '$location',
+		function($scope, federacoesService, $location) {
 
 		$scope.showFilter = false;
 		$scope.showForm = false;
@@ -23,16 +23,31 @@ angular.module(GLOBAL.nameApp)
 
 		$scope.filter = function(){
 
-			federacoesService.getFederacoes().
-				then(function successCallback(response) {
-						$scope.listaFederacoes = response.data;
-						$scope.showErrorMessage = false;
-		  		}, function errorCallback(response) {
-						$scope.errorMessage = "Aconteceu um problema";
-						$scope.errorStatus = response.status;
-						$scope.showErrorMessage = true;
-		  		});
+			federacoesService.listaFederacoes().$promise
+				.then(function (response) {
+		          	$scope.listaFederacoes = response;
+		        }).catch(function(response) {
+		          	handleError(response);
+		        });
+
 		};
+
+		var handleError = function(response) {
+
+			if (response.status === 401) {
+				//console.error('You need to login first!');
+				$scope.errorMessage = "You need to login first!";
+				$scope.errorStatus = response.status;
+				$scope.showErrorMessage = true;
+				$location.url('/login');
+
+			} else {
+				//console.error('Something went wrong...', response);
+				$scope.errorMessage = "Something went wrong...";
+				$scope.errorStatus = response.status;
+				$scope.showErrorMessage = true;
+			}
+	};
 
 		$scope.clickFilterTransition = function() {
 			$scope.showFilter = !$scope.showFilter;
