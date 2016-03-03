@@ -46,7 +46,7 @@ public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests()
 			.antMatchers(HttpMethod.OPTIONS, "/*/**").permitAll()
 			.antMatchers("/login", "/rest/open/**").permitAll()
-			.antMatchers("/logout", "/rest/**").authenticated();
+			.antMatchers("/logout", "/*/**").authenticated();
 
 		// Handlers and entry points
 		http.exceptionHandling().authenticationEntryPoint(authenticationEntryPoint);
@@ -68,11 +68,12 @@ public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
 				new NegatedRequestMatcher(new AntPathRequestMatcher("/login*/**", HttpMethod.OPTIONS.toString())),
 				new NegatedRequestMatcher(new AntPathRequestMatcher("/logout*/**", HttpMethod.OPTIONS.toString())),
 
-				new NegatedRequestMatcher(new AntPathRequestMatcher("/rest*/**", HttpMethod.GET.toString())),
-				new NegatedRequestMatcher(new AntPathRequestMatcher("/rest*/**", HttpMethod.HEAD.toString())),
-				new NegatedRequestMatcher(new AntPathRequestMatcher("/rest*/**", HttpMethod.OPTIONS.toString())),
-				new NegatedRequestMatcher(new AntPathRequestMatcher("/rest*/**", HttpMethod.TRACE.toString())),
-				new NegatedRequestMatcher(new AntPathRequestMatcher("/rest/open*/**"))
+				new NegatedRequestMatcher(new AntPathRequestMatcher("/*/**", HttpMethod.GET.toString())),
+				new NegatedRequestMatcher(new AntPathRequestMatcher("/*/**", HttpMethod.HEAD.toString())),
+				new NegatedRequestMatcher(new AntPathRequestMatcher("/*/**", HttpMethod.OPTIONS.toString())),
+				new NegatedRequestMatcher(new AntPathRequestMatcher("/*/**", HttpMethod.TRACE.toString()))
+//				,
+//				new NegatedRequestMatcher(new AntPathRequestMatcher("/rest/open*/**"))
 			)
 		);
 		http.addFilterAfter(new CsrfTokenResponseCookieBindingFilter(), CsrfFilter.class); // CSRF tokens handling
