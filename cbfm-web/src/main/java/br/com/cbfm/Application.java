@@ -1,27 +1,26 @@
 package br.com.cbfm;
 
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.context.web.SpringBootServletInitializer;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
 import br.com.cbfm.core.security.ApplicationSecurity;
 
+@ComponentScan
+@Configuration
+@EnableAutoConfiguration
+public class Application {
 
-@SpringBootApplication
-public class Application extends SpringBootServletInitializer{
-	
 	@Bean
 	public WebSecurityConfigurerAdapter webSecurityConfigurerAdapter() {
 		return new ApplicationSecurity();
 	}
-	
-	
+
 	public static void main(String[] args) {
-		SpringApplication.run(Application.class, args);
-
+		SpringApplication application = new SpringApplication(Application.class);
+		application.run(args);
 	}
-
 }
-
