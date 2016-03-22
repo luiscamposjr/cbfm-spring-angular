@@ -8,6 +8,9 @@ public interface FederacaoService {
 	
 	public List<Federacao> findAll();
 	public List<Federacao> findBySigla(String sigla);
+	public Federacao saveFederacao(Federacao federacao);
+	public Federacao updateFederacao(Federacao federacao);
+	public void deleteFederacao(long id);
 	
 	
 

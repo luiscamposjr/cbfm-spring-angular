@@ -68,13 +68,16 @@ module.exports = function (grunt) {
           livereload: '<%= connect.options.livereload %>'
         }
       },
-      jsTest: {
-        files: ['test/spec/{,*/}*.js'],
-        tasks: ['newer:jshint:test', 'newer:jscs:test', 'karma']
-      },
+      // jsTest: {
+      //   files: ['test/spec/{,*/}*.js'],
+      //   tasks: ['newer:jshint:test', 'newer:jscs:test', 'karma']
+      // },
       less: {
         files: ['<%= yeoman.app %>/less/{,*/}*.less'],
-        tasks: ['less']
+        tasks: ['less'],
+        options: {
+          livereload: '<%= connect.options.livereload %>'
+        }
        },
       styles: {
         files: ['<%= yeoman.app %>/styles/{,*/}*.css'],
@@ -89,6 +92,7 @@ module.exports = function (grunt) {
         },
         files: [
           '<%= yeoman.app %>/**/*.html',
+          '<%= yeoman.app %>/**/*.less',
           '.tmp/styles/{,*/}*.css',
           '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
         ]
@@ -197,6 +201,7 @@ module.exports = function (grunt) {
       },
       server: '.tmp'
     },
+    
 
     // Add vendor prefixed styles
     postcss: {
@@ -227,29 +232,54 @@ module.exports = function (grunt) {
     },
 
     // Automatically inject Bower components into the app
-    wiredep: {
-      app: {
-        src: ['<%= yeoman.app %>/index.html'],
-        ignorePath:  /\.\.\//
-      },
-      test: {
-        devDependencies: true,
-        src: '<%= karma.unit.configFile %>',
-        ignorePath:  /\.\.\//,
-        fileTypes:{
-          js: {
-            block: /(([\s\t]*)\/{2}\s*?bower:\s*?(\S*))(\n|\r|.)*?(\/{2}\s*endbower)/gi,
-              detect: {
-                js: /'(.*\.js)'/gi
-              },
-              replace: {
-                js: '\'{{filePath}}\','
-              }
-            }
-          }
-      }
-    }, 
+    // wiredep: {
+    //   app: {
+    //     src: ['<%= yeoman.app %>/index.html'],
+    //     ignorePath:  /\.\.\//
+    //   },
+    //   task: {
+    //     src: ['<%= yeoman.app %>/index.html']
+    //   }
+    //   // ,
+    //   // test: {
+    //   //   devDependencies: true,
+    //   //   src: '<%= karma.unit.configFile %>',
+    //   //   ignorePath:  /\.\.\//,
+    //   //   fileTypes:{
+    //   //     js: {
+    //   //       block: /(([\s\t]*)\/{2}\s*?bower:\s*?(\S*))(\n|\r|.)*?(\/{2}\s*endbower)/gi,
+    //   //         detect: {
+    //   //           js: /'(.*\.js)'/gi
+    //   //         },
+    //   //         replace: {
+    //   //           js: '\'{{filePath}}\','
+    //   //         }
+    //   //       }
+    //   //     }
+    //   // }
+    // }, 
 
+    // wiredep: {
+
+    //     target: {
+
+    //         // Point to the files that should be updated when
+    //         // you run `grunt wiredep`
+    //         src: [
+    //             '<%= yeoman.app %>/index.html'
+    //         ],
+    //         // Optional:
+    //         // ---------
+    //         options: {
+    //             devDependencies: true,
+    //         }
+    //     }
+    // },
+    wiredep: {
+      task: {
+        src: ['<%= yeoman.app %>/index.html']
+      }
+    },
     // Renames files for browser caching purposes
     filerev: {
       dist: {
@@ -446,17 +476,19 @@ module.exports = function (grunt) {
     },
 
     // Test settings
-    karma: {
-      unit: {
-        configFile: 'test/karma.conf.js',
-        singleRun: true
-      }
-    }
+    // karma: {
+    //   unit: {
+    //     configFile: 'test/karma.conf.js',
+    //     singleRun: true
+    //   }
+    // }
   });
 
 
   //carregando o less
   grunt.loadNpmTasks('grunt-contrib-less');
+
+  grunt.loadNpmTasks('grunt-wiredep');
 
 
   grunt.registerTask('serve', 'Compile then start a connect web server', function (target) {
@@ -480,12 +512,12 @@ module.exports = function (grunt) {
   });
 
   grunt.registerTask('test', [
-    'clean:server',
-    'wiredep',
-    'concurrent:test',
-    'postcss',
-    'connect:test',
-    'karma'
+    // 'clean:server',
+    'wiredep'
+    // 'concurrent:test',
+    //'postcss',
+    // 'connect:test',
+    //'karma'
   ]);
 
   grunt.registerTask('build', [
@@ -493,7 +525,7 @@ module.exports = function (grunt) {
     'wiredep',
     'useminPrepare',
     'concurrent:dist',
-    'postcss',
+    //'postcss',
     'ngtemplates',
     'concat',
     'ngAnnotate',

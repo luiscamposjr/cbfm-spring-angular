@@ -1,36 +1,39 @@
 package br.com.cbfm.rest.controller;
 
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.cbfm.core.models.Federacao;
 import br.com.cbfm.core.services.FederacaoService;
 
 
+@RequestMapping("/rest/secure")
 @RestController
-@RequestMapping("/federacoes")
 public class FederacoesController {
 	
 	@Autowired
 	private FederacaoService federacaoService;
 	
 	@RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<List<Federacao>> listAllFederacoes(@RequestParam(value="sigla", required = false) String sigla) {
+    public ResponseEntity<List<Federacao>> listAllFederacoes(Federacao federacao) {
 		
 		List<Federacao> federacoes = null;
 
-		if(sigla == null) {
+		if(federacao.getSigla() == null) {
 			federacoes = federacaoService.findAll();
 		}
 		else {
-			federacoes = federacaoService.findBySigla(sigla);
+			federacoes = federacaoService.findBySigla(federacao.getSigla());
 		}
 		
         if(federacoes.isEmpty()){
@@ -39,4 +42,23 @@ public class FederacoesController {
         return new ResponseEntity<List<Federacao>>(federacoes, HttpStatus.OK);
     }
 	
+	@RequestMapping(method = RequestMethod.POST)
+	public ResponseEntity<Federacao> saveFederacao(@RequestBody Federacao federacao) {
+			federacaoService.saveFederacao(federacao);
+		return new ResponseEntity<Federacao>(HttpStatus.OK);
+	}
+	
+	@RequestMapping(method = RequestMethod.PUT)
+	public ResponseEntity<Federacao> updateFederacao(@RequestBody Federacao federacao) {
+			federacaoService.updateFederacao(federacao);
+		return new ResponseEntity<Federacao>(HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "{id}", method = RequestMethod.DELETE)
+	public ResponseEntity<Federacao> deleteFederacao(@PathVariable("id") long id) {
+		federacaoService.deleteFederacao(id);
+		return new ResponseEntity<Federacao>(HttpStatus.OK);
+	}
+	
 }
+

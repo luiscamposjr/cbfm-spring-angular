@@ -10,7 +10,6 @@ angular.module(GLOBAL.nameApp).factory("loginService", function ($http, $resourc
 		options: {method: 'OPTIONS', cache: false}
 	});
 
-
 	/**
 	 * Detect whether the response elements returned indicate an invalid or missing CSRF token...
 	 */

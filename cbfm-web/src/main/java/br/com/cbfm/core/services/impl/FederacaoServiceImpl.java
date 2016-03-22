@@ -17,14 +17,24 @@ public class FederacaoServiceImpl implements FederacaoService{
 	@Autowired
 	private FederacaoRepository federacaoRepository;
 
-	@Override
 	public List<Federacao> findAll() {
-		return (List<Federacao>) federacaoRepository.findAll();
+		return (List<Federacao>) federacaoRepository.findByOrderByIdAsc();
 	}
 
-	@Override
 	public List<Federacao> findBySigla(String sigla) {
-		return federacaoRepository.findBySigla(sigla);
+		return federacaoRepository.findBySiglaContainingIgnoreCase(sigla);
+	}
+
+	public Federacao saveFederacao(Federacao federacao) {
+		return federacaoRepository.save(federacao);
+	}
+
+	public Federacao updateFederacao(Federacao federacao) {
+		return federacaoRepository.save(federacao);
+	}
+
+	public void deleteFederacao(long id) {
+		federacaoRepository.delete(id);
 	}
 
 }

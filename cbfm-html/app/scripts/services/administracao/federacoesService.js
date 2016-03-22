@@ -2,27 +2,25 @@
 angular.module(GLOBAL.nameApp).factory("federacoesService", function ($http, $resource) {
 
   var federacoesResources = function (headers) {
-    if (headers !== undefined) {
-      return $resource('http://localhost:8080/federacoes', {}, {
-        post: {method: 'POST', headers: headers, isArray: false}
-      });
-    } else {
-      return $resource('http://localhost:8080/federacoes', {}, {
-        get: {method: 'GET', cache: false, isArray: true}
-        //,options: {method: 'OPTIONS', cache: false}
-      });
-    }
-  };
 
-  var _listaFederacoes = function () {
-  
-      return federacoesResources().get();
-  };
+    var data = $resource('http://localhost:8080/rest/secure', {federacao: '@federacao'}, {
+        post : {method: 'POST', headers: headers},
+        deleteItem : {method: 'DELETE', headers: headers, url: 'http://localhost:8080/rest/secure/:id', params:{id:'@id'}},
+        update : {method: 'PUT', headers: headers},
+        options: {method: 'OPTIONS', cache: false}
+      });
+      return data;
 
+
+  };
   
+
+  var _federacoesResource = function () {
+      return federacoesResources();
+  };
 
 
   return {
-    listaFederacoes: _listaFederacoes
+    federacoesResource: _federacoesResource
   };
 });

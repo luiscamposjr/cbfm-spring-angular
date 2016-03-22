@@ -19,8 +19,8 @@
 				<form ng-show="showFilter" id="demo" class="collapse">
 					<div class="row">
 					  <div class="form-group col-md-6">
-					    <label for="exampleInputEmail1">Sigla</label>
-					    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Sigla">
+					    <label for="sigla">Sigla</label>
+					    <input type="text" class="form-control" id="sigla" placeholder="Sigla" ng-model="federacao.sigla" ng-maxlength="2">
 					  </div>
 					  <div class="form-group col-md-6">
 					    <label for="exampleInputEmail1">UF</label>
@@ -30,13 +30,13 @@
 
 				<div class="row">
 				  <div class="form-group col-md-6">
-				    <label for="exampleInputEmail1">Descrição</label>
-				    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Descrição">
+				    <label for="nome">Nome</label>
+				    <input type="text" class="form-control" id="nome" placeholder="Nome">
 				  </div>
 				</div>
 
 				<div class="row col-md-12 text-center">
-					<button type="submit" class="btn btn-primary">Pesquisar</button>
+					<button type="submit" class="btn btn-primary" ng-click="clickFilterPesquisa()">Pesquisar</button>
 					<button type="submit" class="btn btn-default" ng-click="clickFilterTransition()">Cancelar</button>
 				</div>
 				
@@ -52,6 +52,21 @@
 		<!-- Filter fim -->
 
 		<div class="alert alert-danger" role="alert" ng-show="showErrorMessage"><b>{{errorMessage}}</b></div>
+
+		<div class="container-fluid crud-grid-action-bar">
+			<div class="btn-group pull-right">
+			  <button type="button" class="btn btn-primary" ng-disabled="!rowIsSelected" ng-click="editarItem()"> 
+			  	<span class="glyphicon glyphicon-edit btn-xs"></span>
+			  	Editar 
+			  </button>
+			  <button type="button" class="btn btn-primary" ng-disabled="!rowIsSelected" ng-click="deletarItem()">
+			  	<span class="glyphicon glyphicon-trash btn-xs"></span>
+			  	Excluir 
+			  </button>
+			</div>
+		</div>
+
+
   				
 		<div class="table-responsive" ng-show="!showForm">
   			<table class="table table-hover table-striped">
@@ -61,20 +76,14 @@
 						<th>Sigla</th>
 						<th>UF</th>
 						<th>Nome</th>
-						<th class="actions">Ações</th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr ng-repeat="federacao in listaFederacoes">
+					<tr ng-repeat="federacao in listaFederacoes" ng-class="{'selected':$index == selectedRow}" ng-click="setClickedRow($index)">
 						<td><img src="images/federacoes/cbfm.png" class="img-fed-grid" /></td>
 						<td>{{federacao.sigla}}</td>
 						<td>{{federacao.uf}}</td>
 						<td>{{federacao.nome}}</td>
-						<td class="actions">
-							<a href=""><span class="btn btn-primary glyphicon glyphicon-edit btn-xs"></span> </a>
-							<a href=""><span class="btn btn-primary glyphicon glyphicon-trash btn-xs"></span> </a>
-							<!-- <a class="btn btn-danger btn-xs"  href="#" data-toggle="modal" data-target="#delete-modal">Excluir</a> -->
-						</td>
 					</tr>
 				</tbody>
 			</table>
@@ -98,22 +107,27 @@
 		<div class="row">
 			<div class="form-group col-md-6">
 				<label>Sigla</label>
-				<input type="text" class="form-control" placeholder="Sigla" required>
+				<input type="text" class="form-control" placeholder="Sigla" ng-model="federacao.sigla" required>
 			</div>
 			<div class="form-group col-md-6">
-				<label>UF</label>
-				<select name="singleSelect" id="singleSelect" ng-model="data.singleSelect">
-			      <option value="">---Please select---</option> <!-- not selected / blank option -->
-			      <option>Option 1</option> <!-- interpolation -->
-			      <option>Option 2</option>
-			    </select>
+				<label>Nome</label>
+				<input type="text" class="form-control" placeholder="Nome"ng-model="federacao.nome" required>
 			</div>
+		</div>		
+		<div class="row">
+			<div class="form-group col-md-6">
+				<label>UF</label>
+				<select ng-model="federacao.uf" class="form-control crud-form-select-uf">
+					<option ng-repeat="e in estadosBrasileiros" value="{{e.Sigla}}" ng-selected="federacao.uf==e.Sigla">{{e.Sigla}}</option>
+
+				</select>
+			</div>				
 		</div>
 
 		</form>
 
 			<div class="row col-md-12 text-center">
-				<button type="submit" class="btn btn-primary">Salvar</button>
+				<button type="submit" class="btn btn-primary" ng-click="saveItem()">Salvar</button>
 				<button type="submit" class="btn btn-default" ng-click="cancelAddItem()">Cancelar</button>
 			</div>
 		</div>
