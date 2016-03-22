@@ -3,7 +3,9 @@ package br.com.cbfm.core.models;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 
@@ -13,7 +15,8 @@ public class Federacao {
 	
 	
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="federacoes_id_federacao_seq")
+	@SequenceGenerator(name="federacoes_id_federacao_seq", sequenceName="federacoes_id_federacao_seq", allocationSize=1)
 	@Column(name = "id_federacao")
 	private long id;
 	private String sigla;
