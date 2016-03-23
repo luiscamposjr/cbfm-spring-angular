@@ -1,7 +1,7 @@
 'use strict';
 angular.module(GLOBAL.nameApp)
-	.controller('FederacoesController', ['$scope', 'federacoesService', '$location', 'Csrf', '$http', 'CONST_UTIL',
-		function($scope, federacoesService, $location, Csrf, $http, CONST_UTIL) {
+	.controller('FederacoesController', ['$scope', 'federacoesService', '$location', 'Csrf', '$http', 'CONST_UTIL', 'toaster', '$animate',
+		function($scope, federacoesService, $location, Csrf, $http, CONST_UTIL, toaster) {
 
 		$scope.showFilter = false;
 		$scope.showForm = false;
@@ -44,6 +44,10 @@ angular.module(GLOBAL.nameApp)
 				$scope.showErrorMessage = true;
 				$location.url('/login');
 
+			} 
+			else if (response.status === -1) {
+				$location.url('/login');
+				toaster.pop('error', 'Atenção', 'Servidor está fora de serviço.', 3000);
 			} else {
 				$scope.errorMessage = "Something went wrong...";
 				$scope.errorStatus = response.status;
@@ -63,7 +67,7 @@ angular.module(GLOBAL.nameApp)
 			$scope.showForm = true;
 			if($scope.showErrorMessage) {
 				$scope.showErrorMessageFunction();
-			}			
+			}		
 		};
 
 		$scope.cancelAddItem = function() {
@@ -80,7 +84,7 @@ angular.module(GLOBAL.nameApp)
 
 						federacoesService.federacoesResource(headers).update(
 							{id: $scope.federacao.id, sigla: $scope.federacao.sigla, nome: $scope.federacao.nome, uf: $scope.federacao.uf})
-						.$promise.then(function (response) {
+						.$promise.then(function () {
 							$scope.showForm = false;
 							$scope.filter();
 						}).catch(function(response) {
@@ -95,7 +99,7 @@ angular.module(GLOBAL.nameApp)
 				{
 						federacoesService.federacoesResource(headers).post(
 							{id: $scope.federacao.id, sigla: $scope.federacao.sigla, nome: $scope.federacao.nome, uf: $scope.federacao.uf})
-						.$promise.then(function (response) {
+						.$promise.then(function () {
 							$scope.showForm = false;
 							$scope.filter();
 						}).catch(function(response) {
@@ -123,7 +127,7 @@ angular.module(GLOBAL.nameApp)
 
 					federacoesService.federacoesResource(headers).deleteItem(
 						{id: $scope.federacao.id})
-					.$promise.then(function (response) {
+					.$promise.then(function () {
 						$scope.showForm = false;
 						$scope.filter();
 					}).catch(function(response) {
@@ -133,6 +137,27 @@ angular.module(GLOBAL.nameApp)
 				
 			});
 
+			// $.notify({
+			// 			//icon: $('[data-notify="icon"]').html(),
+			// 			title: "Titulo",
+			// 			message: "Mensagem"
+			// 		},{
+			// 			type: "info",
+			// 			allow_dismiss: true,
+			// 			newest_on_top: true,
+			// 			placement: {
+			// 				from: "top",
+			// 				align: "left"
+			// 			},
+			// 			offset: {
+			// 				x: 20,
+			// 				y: 120
+			// 			},
+			// 			spacing: 10,
+			// 			z_index: 1300,
+			// 			delay: 5000,
+			// 			mouse_over: "pause"
+			// 		});
 		};
 
 		$scope.showErrorMessageFunction = function() {

@@ -15,10 +15,10 @@ angular.module(GLOBAL.nameApp)
 
 			console.log("chegou aqui");
 
-			loginService.login($scope.credentials.username, $scope.credentials.password, function (data, status, headers, config) {
+			loginService.login($scope.credentials.username, $scope.credentials.password, function () {
 				console.info('The user has been successfully logged in! ');
 				$location.url('/');
-			}, function(data, status, headers, config) {
+			}, function() {
 				console.error('Something went wrong while trying to login... ');
 			});
 
@@ -26,7 +26,7 @@ angular.module(GLOBAL.nameApp)
 
 		$scope.logout = function() {
 
-			loginService.logout(function (data, status, headers, config) {
+			loginService.logout(function () {
 				
 				$scope.credentials = {username: '', password: ''};
 				$cookies.remove("JSESSIONID");
@@ -35,8 +35,8 @@ angular.module(GLOBAL.nameApp)
 
 				$location.url('/login');
 
-			}, function(data, status, headers, config) {
-				console.error('Something went wrong while trying to logout... ', data, status, headers, config);
+			}, function() {
+				console.error('Something went wrong while trying to logout... ');
 			});
 		};
 

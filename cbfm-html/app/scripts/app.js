@@ -20,7 +20,9 @@ angular
   .module(GLOBAL.nameApp, [
     'ngCookies',
     'ngResource',
-    'ngRoute'
+    'ngRoute',
+    'ngAnimate',
+    'toaster'
   ]);
 
 angular.module(GLOBAL.nameApp).config(['$routeProvider', '$locationProvider', '$httpProvider', 
