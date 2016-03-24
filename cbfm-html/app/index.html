@@ -25,11 +25,13 @@
     <toaster-container toaster-options="{'close-button': true}"></toaster-container>
 
     <!-- Menu -->
-    <navegacao></navegacao>
+    <!-- <navegacao></navegacao> -->
 
     <div class="container gap-top">
       <div ng-view="">
       </div>
+
+      <div data-ng-include="'views/workspace/header/header.html'"></div>
     </div>
 
 
@@ -75,6 +77,7 @@
         <script src="scripts/services/security/Cookies.js"></script>
         <script src="scripts/services/security/Csrf.js"></script>
         <script src="scripts/util/CONST_UTIL.js"></script>
+        <script src="scripts/util/menu.js"></script>
         <!-- endbuild -->
 </body>
 </html>

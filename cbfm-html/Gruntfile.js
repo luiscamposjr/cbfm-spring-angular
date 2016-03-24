@@ -40,7 +40,8 @@ module.exports = function (grunt) {
           files: {
               '<%= yeoman.app %>/styles/main.css': [ 
                                                      '<%= yeoman.app %>/less/main.less', 
-                                                     '<%= yeoman.app %>/less/login.less'
+                                                     '<%= yeoman.app %>/less/login.less', 
+                                                     '<%= yeoman.app %>/less/menu.less'
                                                     ]
             }
           },

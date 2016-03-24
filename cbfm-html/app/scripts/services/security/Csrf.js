@@ -17,12 +17,12 @@ angular.module(GLOBAL.nameApp).factory('Csrf', function ($http, $q, Cookies) {
 				headers = {};
 			}
 
-			optionsFunction().$promise.then(function (response) {
-				console.log('Obtained a CSRF token in a cookie', response);
+			optionsFunction().$promise.then(function () {
+				//console.log('Obtained a CSRF token in a cookie', response);
 
 				// Extract the CSRF token
 				var csrfToken = Cookies.getFromDocument($http.defaults.xsrfCookieName);
-				console.log('Extracted the CSRF token from the cookie', csrfToken);
+				//console.log('Extracted the CSRF token from the cookie', csrfToken);
 
 				// Add CSRF to headers
 				headers[$http.defaults.xsrfHeaderName] = csrfToken;

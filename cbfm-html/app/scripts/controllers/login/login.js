@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module(GLOBAL.nameApp)
-	.controller('LoginController', ['$scope', '$cookies', 'loginService', '$http', '$location', 
-		function($scope, $cookies, loginService, $http, $location) {
+	.controller('LoginController', ['$scope', '$cookies', 'loginService', '$http', '$location', 'toaster', '$animate',
+		function($scope, $cookies, loginService, $http, $location, toaster) {
 
 
 		$scope.credentials = {
@@ -13,13 +13,10 @@ angular.module(GLOBAL.nameApp)
 
 		$scope.login = function (){
 
-			console.log("chegou aqui");
-
 			loginService.login($scope.credentials.username, $scope.credentials.password, function () {
-				console.info('The user has been successfully logged in! ');
 				$location.url('/');
 			}, function() {
-				console.error('Something went wrong while trying to login... ');
+				toaster.pop('error', 'Atenção', 'Ocorreu uma falha no login.', 3000);
 			});
 
 		};
@@ -31,12 +28,10 @@ angular.module(GLOBAL.nameApp)
 				$scope.credentials = {username: '', password: ''};
 				$cookies.remove("JSESSIONID");
 
-				console.info('The user has been logged out! ');
-
 				$location.url('/login');
 
 			}, function() {
-				console.error('Something went wrong while trying to logout... ');
+				toaster.pop('error', 'Atenção', 'Ocorreu uma falha no logout.', 3000);
 			});
 		};
 

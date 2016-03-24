@@ -29,20 +29,22 @@ angular.module(GLOBAL.nameApp)
 			federacoesService.federacoesResource().query().$promise
 					.then(function (response) {
 			          	$scope.listaFederacoes = response;
-			          	console.log('GET /rest/secure returned: ', response);
+			          	//console.log('GET /rest/secure returned: ', response);
 			        }).catch(function(response) {
 			          	handleError(response);
 			        });
+			$scope.rowIsSelected = false;
 
 		};
 
 		var handleError = function(response) {
 
 			if (response.status === 401) {
-				$scope.errorMessage = "You need to login first!";
-				$scope.errorStatus = response.status;
-				$scope.showErrorMessage = true;
+				// $scope.errorMessage = "You need to login first!";
+				// $scope.errorStatus = response.status;
+				// $scope.showErrorMessage = true;
 				$location.url('/login');
+				toaster.pop('error', 'Atenção', 'Seu usuário não está logado.', 3000);
 
 			} 
 			else if (response.status === -1) {
