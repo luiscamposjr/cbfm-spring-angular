@@ -69,6 +69,26 @@
   margin-left: 10px;
   margin-right: 10px;
 }
+.fw-datagrid thead {
+  /*background-color: #286090;
+        border-top: 2px solid #ddd;*/
+}
+.fw-datagrid thead tr th {
+  color: #286090;
+  border-left: 1px #DDD solid;
+}
+.fw-datagrid thead tr .firstColumn {
+  border-left: 0px;
+}
+.fw-datagrid tbody tr .selected {
+  background-color: #B8D8E3 !important;
+}
+.fw-datagrid tbody tr td {
+  border-left: 1px #DDD solid;
+}
+.fw-datagrid tbody tr .firstColumn {
+  border-left: 0px;
+}
 
 .form-signin {
   max-width: 330px;

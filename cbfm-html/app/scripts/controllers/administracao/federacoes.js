@@ -5,12 +5,11 @@ angular.module(GLOBAL.nameApp)
 
 		$scope.showFilter = false;
 		$scope.showForm = false;
-		$scope.showErrorMessage = false;
-		$scope.errorMessage = "";
-		$scope.errorStatus = "";
+		$scope.rowIsSelected = false;
 
-		$scope.listaFederacoes = [];
-		$scope.federacao = {};
+		$scope.selectedRow = {};
+		$scope.itemsList = [];
+		$scope.filterDTO = {};
 
 		$scope.estadosBrasileiros = CONST_UTIL.estadosBrasileiros;
 
@@ -24,25 +23,29 @@ angular.module(GLOBAL.nameApp)
 
 		};
 
+		$scope.clearAll = function(){
+			$scope.itemsList.length = 0;
+			$scope.selectedRow = {};
+		};
+
 		$scope.filter = function(){
 
-			federacoesService.federacoesResource().query().$promise
+			$scope.clearAll();
+
+			federacoesService.federacoesResource().query({sigla: $scope.filterDTO.sigla, nome: $scope.filterDTO.nome, uf: $scope.filterDTO.uf}).$promise
 					.then(function (response) {
-			          	$scope.listaFederacoes = response;
+			          	$scope.itemsList = response;
 			          	//console.log('GET /rest/secure returned: ', response);
 			        }).catch(function(response) {
 			          	handleError(response);
 			        });
-			$scope.rowIsSelected = false;
+			// $scope.rowIsSelected = false;
 
 		};
 
 		var handleError = function(response) {
 
 			if (response.status === 401) {
-				// $scope.errorMessage = "You need to login first!";
-				// $scope.errorStatus = response.status;
-				// $scope.showErrorMessage = true;
 				$location.url('/login');
 				toaster.pop('error', 'Atenção', 'Seu usuário não está logado.', 3000);
 
@@ -51,9 +54,7 @@ angular.module(GLOBAL.nameApp)
 				$location.url('/login');
 				toaster.pop('error', 'Atenção', 'Servidor está fora de serviço.', 3000);
 			} else {
-				$scope.errorMessage = "Something went wrong...";
-				$scope.errorStatus = response.status;
-				$scope.showErrorMessageFunction();
+				toaster.pop('error', 'Atenção', 'Aconteceu algum problema.', 3000);
 			}
 		};
 
@@ -61,32 +62,40 @@ angular.module(GLOBAL.nameApp)
 			$scope.showFilter = !$scope.showFilter;
 		};
 
+		$scope.clickFilterCancelar = function() {
+			$scope.filterDTO = {};
+			$scope.clickFilterTransition();
+		};
+
+		$scope.clickFilterLimpar = function() {
+			$scope.filterDTO = {};
+		};
+
 		$scope.clickFilterPesquisa = function() {
-			$scope.filter({sigla:$scope.federacao.sigla});
+			$scope.clickFilterTransition();
+			$scope.filter();
 		};
 
 		$scope.addItem = function() {
-			$scope.showForm = true;
-			if($scope.showErrorMessage) {
-				$scope.showErrorMessageFunction();
-			}		
+			$scope.selectedRow = {};
+			$scope.showForm = true;		
 		};
 
 		$scope.cancelAddItem = function() {
 			$scope.showForm = false;
-			$scope.showErrorMessageFunction();
 		};
 
 		$scope.saveItem = function() {
 
-			if($scope.federacao.id !== undefined && $scope.federacao.id > 0) {
+			if($scope.selectedRow.id !== undefined && $scope.selectedRow.id > 0) {
 
 				Csrf.addResourcesCsrfToHeaders(federacoesService.federacoesResource().options, $http.defaults.headers.put).then(function (headers) 
 				{
 
 						federacoesService.federacoesResource(headers).update(
-							{id: $scope.federacao.id, sigla: $scope.federacao.sigla, nome: $scope.federacao.nome, uf: $scope.federacao.uf})
+							{id: $scope.selectedRow.id, sigla: $scope.selectedRow.sigla, nome: $scope.selectedRow.nome, uf: $scope.selectedRow.uf})
 						.$promise.then(function () {
+							toaster.pop('info', 'Atenção', 'Item atualizado com sucesso.', 3000);
 							$scope.showForm = false;
 							$scope.filter();
 						}).catch(function(response) {
@@ -100,8 +109,9 @@ angular.module(GLOBAL.nameApp)
 				Csrf.addResourcesCsrfToHeaders(federacoesService.federacoesResource().options, $http.defaults.headers.post).then(function (headers) 
 				{
 						federacoesService.federacoesResource(headers).post(
-							{id: $scope.federacao.id, sigla: $scope.federacao.sigla, nome: $scope.federacao.nome, uf: $scope.federacao.uf})
+							{id: $scope.selectedRow.id, sigla: $scope.selectedRow.sigla, nome: $scope.selectedRow.nome, uf: $scope.selectedRow.uf})
 						.$promise.then(function () {
+							toaster.pop('info', 'Atenção', 'Item adicionado com sucesso.', 3000);
 							$scope.showForm = false;
 							$scope.filter();
 						}).catch(function(response) {
@@ -113,8 +123,6 @@ angular.module(GLOBAL.nameApp)
 
 		$scope.editarItem = function() {
 
-			$scope.federacao = $scope.listaFederacoes[$scope.selectedRow];
-			console.log($scope.federacao);
 			$scope.showForm = true;
 
 		};
@@ -122,61 +130,35 @@ angular.module(GLOBAL.nameApp)
 
 		$scope.deletarItem = function() {
 
-			$scope.federacao = $scope.listaFederacoes[$scope.selectedRow];
-
 			Csrf.addResourcesCsrfToHeaders(federacoesService.federacoesResource().options, $http.defaults.headers.delete).then(function (headers) 
 			{
-
 					federacoesService.federacoesResource(headers).deleteItem(
-						{id: $scope.federacao.id})
+						{id: $scope.selectedRow.id})
 					.$promise.then(function () {
 						$scope.showForm = false;
 						$scope.filter();
+						toaster.pop('info', 'Atenção', 'Item excluído com sucesso.', 3000);
 					}).catch(function(response) {
 						handleError(response);
 					});
-
-				
 			});
-
-			// $.notify({
-			// 			//icon: $('[data-notify="icon"]').html(),
-			// 			title: "Titulo",
-			// 			message: "Mensagem"
-			// 		},{
-			// 			type: "info",
-			// 			allow_dismiss: true,
-			// 			newest_on_top: true,
-			// 			placement: {
-			// 				from: "top",
-			// 				align: "left"
-			// 			},
-			// 			offset: {
-			// 				x: 20,
-			// 				y: 120
-			// 			},
-			// 			spacing: 10,
-			// 			z_index: 1300,
-			// 			delay: 5000,
-			// 			mouse_over: "pause"
-			// 		});
 		};
 
-		$scope.showErrorMessageFunction = function() {
-			$scope.showErrorMessage = !$scope.showErrorMessage;
-		};
+		$scope.setClickedRow = function(federacao){
 
-		$scope.selectedRow = null;
-		$scope.rowIsSelected = false;
-
-		$scope.setClickedRow = function(index){
-			$scope.selectedRow = index;
-			if(index >= 0){
-				$scope.rowIsSelected = true;
-			}
-			else {
+			if($scope.selectedRow === federacao){
+				$scope.selectedRow = {};
 				$scope.rowIsSelected = false;
 			}
+			else {
+				$scope.selectedRow = federacao;
+				$scope.rowIsSelected = true;
+			}
+		};
+
+		$scope.itemDoubleClick = function(item) {
+			$scope.selectedRow = item;
+			$scope.editarItem();
 		};
 
 		$scope.init();

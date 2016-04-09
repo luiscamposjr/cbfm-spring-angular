@@ -84,3 +84,38 @@
     margin-left: 10px;
     margin-right: 10px;
 }
+
+.fw-datagrid {
+    
+    thead {
+
+        /*background-color: #286090;
+        border-top: 2px solid #ddd;*/
+
+        tr{
+
+            th{
+                color: #286090;
+                border-left: 1px #DDD solid;
+            }
+            .firstColumn {
+                        border-left: 0px;
+                    }
+        }
+    }
+    tbody {
+
+        tr{
+            .selected {
+                background-color: #B8D8E3 !important;
+            }
+
+            td{
+                border-left: 1px #DDD solid;
+            }
+            .firstColumn {
+                        border-left: 0px;
+                    }
+        }
+    }
+}
