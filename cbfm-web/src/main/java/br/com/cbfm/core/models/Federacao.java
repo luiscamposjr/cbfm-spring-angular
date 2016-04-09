@@ -1,35 +1,24 @@
 package br.com.cbfm.core.models;
 
+import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 
 @Entity
 @Table(name = "federacoes")
-public class Federacao {
+@SequenceGenerator(name = "idgen", sequenceName = "federacoes_id_federacao_seq", allocationSize = 1)
+@AttributeOverride(name = "id", column = @Column(name = "id_federacao"))
+public class Federacao extends AbstractEntity{
 	
+	private static final long serialVersionUID = 1L;
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="federacoes_id_federacao_seq")
-	@SequenceGenerator(name="federacoes_id_federacao_seq", sequenceName="federacoes_id_federacao_seq", allocationSize=1)
-	@Column(name = "id_federacao")
-	private long id;
 	private String sigla;
 	private String uf;
 	private String nome;
 	
-	
-	public long getId() {
-		return id;
-	}
-	public void setId(long id) {
-		this.id = id;
-	}
 	public String getSigla() {
 		return sigla;
 	}
@@ -48,27 +37,5 @@ public class Federacao {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + (int) (id ^ (id >>> 32));
-		return result;
-	}
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Federacao other = (Federacao) obj;
-		if (id != other.id)
-			return false;
-		return true;
-	}
-
 	
 }
