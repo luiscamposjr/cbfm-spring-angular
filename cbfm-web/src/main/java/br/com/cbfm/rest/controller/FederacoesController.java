@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.cbfm.core.dto.FilterFederacaoDTO;
 import br.com.cbfm.core.models.Federacao;
 import br.com.cbfm.core.services.FederacaoService;
 
@@ -25,17 +25,10 @@ public class FederacoesController {
 	private FederacaoService federacaoService;
 	
 	@RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<List<Federacao>> listAllFederacoes(Federacao federacao) {
+    public ResponseEntity<List<Federacao>> listAllFederacoes(FilterFederacaoDTO filterFederacaoDTO) {
 		
-		List<Federacao> federacoes = null;
+		List<Federacao> federacoes = federacaoService.findAll(filterFederacaoDTO);
 
-		if(federacao.getSigla() == null) {
-			federacoes = federacaoService.findAll();
-		}
-		else {
-			federacoes = federacaoService.findBySigla(federacao.getSigla());
-		}
-		
         if(federacoes.isEmpty()){
             return new ResponseEntity<List<Federacao>>(HttpStatus.NO_CONTENT);
         }
