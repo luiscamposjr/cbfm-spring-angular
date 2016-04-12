@@ -1,0 +1,79 @@
+package br.com.cbfm.core.models;
+
+import javax.persistence.AttributeOverride;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+
+
+@Entity
+@Table(name = "clubes")
+@SequenceGenerator(name = "idgen", sequenceName = "clubes_id_clube_seq", allocationSize = 1)
+@AttributeOverride(name = "id", column = @Column(name = "id_clube"))
+public class Clube extends AbstractEntity{
+	
+	private static final long serialVersionUID = 1L;
+	
+	private Federacao federacao;
+	private String nome;
+	private String responsavel;
+	private String email;
+	private boolean ativo;
+	private String cnpj;
+
+	@ManyToOne
+	@JoinColumn(name = "id_federacao")
+	@Column(name = "federacao")
+	public Federacao getFederacao() {
+		return federacao;
+	}
+
+	public void setFederacao(Federacao federacao) {
+		this.federacao = federacao;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public String getResponsavel() {
+		return responsavel;
+	}
+
+	public void setResponsavel(String responsavel) {
+		this.responsavel = responsavel;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public boolean isAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo(boolean ativo) {
+		this.ativo = ativo;
+	}
+
+	public String getCnpj() {
+		return cnpj;
+	}
+
+	public void setCnpj(String cnpj) {
+		this.cnpj = cnpj;
+	} 
+	
+}
