@@ -17,7 +17,7 @@ import br.com.cbfm.core.models.Federacao;
 import br.com.cbfm.core.services.FederacaoService;
 
 
-@RequestMapping("/rest/secure")
+@RequestMapping("/rest/federacoes")
 @RestController
 public class FederacoesController {
 	
@@ -47,7 +47,7 @@ public class FederacoesController {
 		return new ResponseEntity<Federacao>(HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "{id}", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/federacao/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Federacao> deleteFederacao(@PathVariable("id") long id) {
 		federacaoService.deleteFederacao(id);
 		return new ResponseEntity<Federacao>(HttpStatus.OK);

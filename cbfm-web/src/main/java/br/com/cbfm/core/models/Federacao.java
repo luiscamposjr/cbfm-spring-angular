@@ -1,8 +1,11 @@
 package br.com.cbfm.core.models;
 
+import java.util.List;
+
 import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -18,6 +21,8 @@ public class Federacao extends AbstractEntity{
 	private String sigla;
 	private String uf;
 	private String nome;
+	
+//	private List<Clube> clubes;
 	
 	public String getSigla() {
 		return sigla;
@@ -37,5 +42,13 @@ public class Federacao extends AbstractEntity{
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	
+//	
+//	@OneToMany(mappedBy = "federacao")
+//	public List<Clube> getClubes() {
+//		return clubes;
+//	}
+//	public void setClubes(List<Clube> clubes) {
+//		this.clubes = clubes;
+//	}
+//	
 }
