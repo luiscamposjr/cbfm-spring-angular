@@ -1,13 +1,5 @@
 CREATE DATABASE IF NOT EXISTS cbfm;
 
---CREATE TABLE federacoes 
---(
---	id_federacao serial NOT NULL,
---	uf VARCHAR(2),
---	sigla VARCHAR(10),
---	nome VARCHAR(50)
---);
-
 CREATE TABLE federacoes
 (
   id_federacao serial NOT NULL,
@@ -26,11 +18,11 @@ CREATE TABLE clubes
 	ativo boolean,
 	email VARCHAR(50),
 	cnpj VARCHAR(50),
-	federacao INT NOT NULL,
+	id_federacao INT NOT NULL,
   	CONSTRAINT clubes_pkey 
   		PRIMARY KEY (id_clube),
 	CONSTRAINT constraint_fk_id_federacao 
-		FOREIGN KEY (federacao)
+		FOREIGN KEY (id_federacao)
 		REFERENCES federacoes(id_federacao)
 		ON UPDATE CASCADE
         ON DELETE RESTRICT
