@@ -1,6 +1,6 @@
 package br.com.cbfm.core.models;
 
-import java.util.List;
+import java.util.Set;
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
@@ -16,12 +16,22 @@ import javax.persistence.Table;
 @AttributeOverride(name = "id", column = @Column(name = "id_federacao"))
 public class Federacao extends AbstractEntity{
 	
-	private static final long serialVersionUID = 1L;
+	
+	private static final long serialVersionUID = 9025004657033297345L;
 	
 	private String sigla;
 	private String uf;
-	private String nome;
+	private String nome;	
 	
+	@OneToMany(mappedBy="federacao")
+    private Set<Clube> clubes;
+	
+	public Set<Clube> getClubes() {
+		return clubes;
+	}
+	public void setClubes(Set<Clube> clubes) {
+		this.clubes = clubes;
+	}
 	public String getSigla() {
 		return sigla;
 	}
@@ -40,4 +50,6 @@ public class Federacao extends AbstractEntity{
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
+
+	
 }

@@ -11,9 +11,11 @@ import com.google.common.base.Strings;
 import com.mysema.query.BooleanBuilder;
 import com.mysema.query.jpa.impl.JPAQuery;
 import com.mysema.query.types.Predicate;
+import com.mysema.query.types.Projections;
 
 import br.com.cbfm.core.dto.FilterFederacaoDTO;
 import br.com.cbfm.core.models.Federacao;
+import br.com.cbfm.core.models.QAbstractEntity;
 import br.com.cbfm.core.models.QFederacao;
 import br.com.cbfm.core.repositories.FederacaoRepositoryCustom;
 
@@ -28,6 +30,7 @@ public class FederacaoRepositoryImpl extends QueryDslRepositorySupport implement
 	private EntityManager em;
 
 	private static final QFederacao qFederacao = QFederacao.federacao;
+	private static final QAbstractEntity qAbstractEntity = QAbstractEntity.abstractEntity;
 
 	/**
 	 * Creates a new instance of {@link FederacaoRepositoryImpl}.
@@ -45,7 +48,7 @@ public class FederacaoRepositoryImpl extends QueryDslRepositorySupport implement
  		return query.from(qFederacao)
 			.where(predicate)
 			.orderBy(qFederacao.id.desc())
-			.list(qFederacao);
+			.list(Projections.fields(Federacao.class, qFederacao.id, qFederacao.nome, qFederacao.uf, qFederacao.sigla));
 		
 	}
 	

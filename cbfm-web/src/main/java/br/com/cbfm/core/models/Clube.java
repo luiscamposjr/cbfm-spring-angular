@@ -5,7 +5,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -16,18 +15,19 @@ import javax.persistence.Table;
 @AttributeOverride(name = "id", column = @Column(name = "id_clube"))
 public class Clube extends AbstractEntity{
 	
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 8120377000459073106L;
 	
-	private Federacao federacao;
+	
 	private String nome;
 	private String responsavel;
 	private String email;
 	private boolean ativo;
 	private String cnpj;
-
-	@ManyToOne
-	@JoinColumn(name = "id_federacao")
-	@Column(name = "federacao")
+	
+    @ManyToOne
+    @JoinColumn(name="id_federacao", nullable=false)
+    private Federacao federacao;
+	
 	public Federacao getFederacao() {
 		return federacao;
 	}
