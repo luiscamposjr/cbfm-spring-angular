@@ -39,7 +39,7 @@ angular.module(GLOBAL.nameApp).config(['$routeProvider', '$locationProvider', '$
         controller: 'MainCtrl',
         controllerAs: 'main'
       })
-      .when('/federacoes', {
+      .when('/administracao/federacoes', {
         templateUrl: 'views/administracao/federacoes.html',
         controller: 'FederacoesController',
         controllerAs: 'Federacoes'
@@ -48,6 +48,11 @@ angular.module(GLOBAL.nameApp).config(['$routeProvider', '$locationProvider', '$
         templateUrl: 'views/login/login.html',
         controller: 'LoginController',
         controllerAs: 'Login'
+      })
+      .when('/administracao/clubes', {
+        templateUrl: 'views/administracao/clubes.html',
+        controller: 'ClubesController',
+        controllerAs: 'Clubes'
       })
       .otherwise({
         redirectTo: '/'

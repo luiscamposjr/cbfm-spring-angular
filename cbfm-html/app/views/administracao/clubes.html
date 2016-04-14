@@ -1,0 +1,155 @@
+<div class="container">
+	<div class="panel panel-default md-12">
+		<div class="panel-heading">
+			<h3 class="panel-title">Clubes</h3>
+
+			<button type="button" class="btn btn-primary pull-right btn-xs bt-top-bar-crud" ng-click="cancelAddItem()"><span class="glyphicon glyphicon-th-list"></span></button>
+			<button type="button" class="btn btn-primary pull-right btn-xs bt-top-bar-crud"><span class="glyphicon glyphicon-export"></span></button>
+			<button type="button" class="btn btn-primary pull-right btn-xs bt-top-bar-crud" ng-click="addItem()"><span class="glyphicon glyphicon-plus"></span></button>
+
+		</div>
+		
+
+		<!-- Filter inicio -->
+		<div class="panel-body" ng-show="!showForm">
+
+			<div class="container-fluid filter-container">
+				<form ng-show="showFilter" id="filterForm">
+
+					<div class="row">
+					  <div class="form-group col-md-4">
+					    <label for="nome">Nome</label>
+					    <input type="text" class="form-control" id="nome" placeholder="Nome" ng-model="filterDTO.nome">
+					  </div>
+					  <div class="form-group col-md-4">
+					    <label for="federacao">Federacao</label>
+						<select ng-model="selectedRow.uf" class="form-control" placeholder="Selecione">
+							<option ng-repeat="e in federacoes" value="{{e.id}}" >{{e.nome}}</option>
+						</select>
+					  </div>
+					  <div class="form-group col-md-4">
+					    <label for="responsavel">Responsável</label>
+					    <input type="text" class="form-control" id="responsavel" placeholder="Responsável" ng-model="filterDTO.responsavel">
+					  </div>
+					</div>
+
+					<div class="row">
+
+					  <div class="form-group col-md-4">
+					    <label for="email">E-mail</label>
+					    <input type="text" class="form-control" id="email" placeholder="E-mail" ng-model="filterDTO.email">
+					  </div>
+					  <div class="form-group col-md-4">
+					    <label for="ativo">Ativo</label>
+					    <input type="text" class="form-control" id="ativo" placeholder="Ativo" ng-model="filterDTO.ativo">
+					  </div>
+					  <div class="form-group col-md-4">
+					    <label for="cnpj">CNPJ</label>
+					    <input type="text" class="form-control" id="cnpj" placeholder="CNPJ" ng-model="filterDTO.cnpj">
+					  </div>
+					</div>
+
+				
+
+				<div class="row col-md-12 text-center">
+					<button type="submit" class="btn btn-primary" ng-click="clickFilterPesquisa()">Pesquisar</button>
+					<button class="btn btn-default" ng-click="clickFilterLimpar()">Limpar</button>
+					<button class="btn btn-default" ng-click="clickFilterCancelar()">Cancelar</button>
+				</div>
+				
+				</form>
+
+				<button class="btn btn-primary btn-sm pull-right btn-filter-back" ng-click="clickFilterTransition()" ng-show="showFilter"><span class="glyphicon glyphicon-chevron-up"></span></button>
+
+				<div class="row" ng-show="!showFilter">
+					<button class="btn btn-primary btn-sm pull-right btn-filter-expand" ng-click="clickFilterTransition()" ><span class="glyphicon glyphicon-chevron-down"></span></button>
+				</div>
+			</div>
+		</div>
+		<!-- Filter fim -->
+
+		<div class="container-fluid crud-grid-action-bar">
+			<div class="btn-group pull-right">
+			  <button type="button" class="btn btn-primary" ng-disabled="!rowIsSelected" ng-click="editarItem()"> 
+			  	<span class="glyphicon glyphicon-edit btn-xs"></span>
+			  	Editar 
+			  </button>
+			  <button type="button" class="btn btn-primary" ng-disabled="!rowIsSelected" ng-click="deletarItem()">
+			  	<span class="glyphicon glyphicon-trash btn-xs"></span>
+			  	Excluir 
+			  </button>
+			</div>
+		</div>
+
+
+  				
+		<div class="table-responsive" ng-show="!showForm">
+  			<table class="table table-hover table-striped fw-datagrid">
+				<thead>
+					<tr>
+						<th class="firstColumn">Federação</th>
+						<th>Nome</th>
+						<th>Responsável</th>
+						<th>E-mail</th>
+						<th>Ativo</th>
+						<th>CNPJ</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="row in itemsList" ng-class="{'selected':row == selectedRow}" ng-click="setClickedRow(row)" ng-dblclick="itemDoubleClick(row)">
+						<td class="firstColumn">{{row.federacao.sigla}}</td>
+						<td>{{row.nome}}</td>
+						<td>{{row.responsavel}}</td>
+						<td>{{row.email}}</td>
+						<td>{{row.ativo === true ? "Sim" : "Não"}}</td>
+						<td>{{row.cnpj}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<ul class="pagination" ng-show="!showForm">
+				<li class="disabled"><a href="#">&laquo;</a></li>
+				<li class="active"><a href="#">1</a></li>
+				<li><a href="#">2</a></li>
+				<li><a href="#">3</a></li>
+				<li><a href="#">4</a></li>
+				<li><a href="#">5</a></li>
+				<li><a href="#">&raquo;</a></li>
+		</ul>
+
+		<!-- Form -->
+		<div class="panel-body" ng-show="showForm">
+
+		<form>
+
+		<div class="row">
+			<div class="form-group col-md-6">
+				<label>Sigla</label>
+				<input type="text" class="form-control" placeholder="Sigla" ng-model="selectedRow.sigla" required>
+			</div>
+			<div class="form-group col-md-6">
+				<label>Nome</label>
+				<input type="text" class="form-control" placeholder="Nome"ng-model="selectedRow.nome" required>
+			</div>
+		</div>		
+		<div class="row">
+			<div class="form-group col-md-6">
+				<label>UF</label>
+				<select ng-model="selectedRow.uf" class="form-control crud-form-select-uf">
+					<option ng-repeat="e in estadosBrasileiros" value="{{e.Sigla}}" ng-selected="selectedRow.uf==e.Sigla">{{e.Sigla}}</option>
+
+				</select>
+			</div>				
+		</div>
+
+		</form>
+
+			<div class="row col-md-12 text-center">
+				<button type="submit" class="btn btn-primary" ng-click="saveItem()">Salvar</button>
+				<button type="submit" class="btn btn-default" ng-click="cancelAddItem()">Cancelar</button>
+			</div>
+		</div>
+
+	</div>
+</div>

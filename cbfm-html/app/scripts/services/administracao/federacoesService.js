@@ -3,9 +3,9 @@ angular.module(GLOBAL.nameApp).factory("federacoesService", function ($http, $re
 
   var federacoesResources = function (headers) {
 
-    var data = $resource('http://localhost:8080/rest/secure', {federacao: '@federacao'}, {
+    var data = $resource('http://localhost:8080/rest/federacoes', {federacao: '@federacao'}, {
         post : {method: 'POST', headers: headers},
-        deleteItem : {method: 'DELETE', headers: headers, url: 'http://localhost:8080/rest/secure/:id', params:{id:'@id'}},
+        deleteItem : {method: 'DELETE', headers: headers, url: 'http://localhost:8080/rest/federacoes/federacao/:id', params:{id:'@id'}},
         update : {method: 'PUT', headers: headers},
         options: {method: 'OPTIONS', cache: false}
       });
