@@ -3,19 +3,19 @@ package br.com.cbfm.core.dto;
 
 public class FilterClubeDTO {
 	
-	private Long federacaoId;
+	private Long federacao;
 	private String nome;
 	private String responsavel;
 	private String email;
-//	private boolean ativo;
+	private String ativo;
 	private String cnpj;
 
-	public Long getFederacaoId() {
-		return federacaoId;
+	public Long getFederacao() {
+		return federacao;
 	}
 
-	public void setFederacaoId(Long federacaoId) {
-		this.federacaoId = federacaoId;
+	public void setFederacao(Long federacaoId) {
+		this.federacao = federacaoId;
 	}
 
 	public String getNome() {
@@ -42,13 +42,13 @@ public class FilterClubeDTO {
 		this.email = email;
 	}
 
-//	public boolean isAtivo() {
-//		return ativo;
-//	}
-//
-//	public void setAtivo(boolean ativo) {
-//		this.ativo = ativo;
-//	}
+	public String getAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo(String ativo) {
+		this.ativo = ativo;
+	}
 
 	public String getCnpj() {
 		return cnpj;

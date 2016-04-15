@@ -7,6 +7,7 @@ import javax.persistence.PersistenceContext;
 
 import org.springframework.data.jpa.repository.support.QueryDslRepositorySupport;
 
+import com.google.common.base.Strings;
 import com.mysema.query.BooleanBuilder;
 import com.mysema.query.jpa.impl.JPAQuery;
 import com.mysema.query.types.Predicate;
@@ -54,37 +55,36 @@ public class ClubeRepositoryImpl extends QueryDslRepositorySupport implements Cl
  			.where(predicate)
 			.orderBy(qClube.id.desc())
 			.list(Projections.fields(qClube, qClube.id, qClube.nome, qClube.ativo, qClube.cnpj, qClube.email, qClube.responsavel, 
-				  Projections.fields(Federacao.class, qClube.federacao.sigla).as("federacao")));
+				  Projections.fields(Federacao.class, qClube.federacao.id).as("federacao")));
 	}
 	
  	public static Predicate filterPredicate(FilterClubeDTO filtro) {
 	
 		BooleanBuilder builder = new BooleanBuilder();
 		
-//		if(filtro.getFederacaoId() > 0){
-//			builder.and(qClube.federacao.id.eq(filtro.getFederacaoId()));
-//		}
+		if(filtro.getFederacao() != null && filtro.getFederacao() > 0){
+			builder.and(qClube.federacao.id.eq(filtro.getFederacao()));
+		}
 		
-//		if(!Strings.isNullOrEmpty(filtro.getNome())){
-//			builder.and(qClube.nome.contains(filtro.getNome()));
-//		}
-//		
-//		if(!Strings.isNullOrEmpty(filtro.getResponsavel())){
-//			builder.and(qClube.responsavel.contains(filtro.getResponsavel()));
-//		}
-//		
-//		if(!Strings.isNullOrEmpty(filtro.getEmail())){
-//			builder.and(qClube.email.contains(filtro.getEmail()));
-//		}
-//		
-		//TODO fazer filtro de ativo!
-//		if(filtro.){
-//			builder.and(qClube.ativo..contains(filtro.getEmail()));
-//		}
+		if(!Strings.isNullOrEmpty(filtro.getNome())){
+			builder.and(qClube.nome.containsIgnoreCase(filtro.getNome()));
+		}
 		
-//		if(!Strings.isNullOrEmpty(filtro.getCnpj())){
-//			builder.and(qClube.cnpj.contains(filtro.getCnpj()));
-//		}
+		if(!Strings.isNullOrEmpty(filtro.getResponsavel())){
+			builder.and(qClube.responsavel.containsIgnoreCase(filtro.getResponsavel()));
+		}
+		
+		if(!Strings.isNullOrEmpty(filtro.getEmail())){
+			builder.and(qClube.email.containsIgnoreCase(filtro.getEmail()));
+		}
+		
+		if(!Strings.isNullOrEmpty(filtro.getAtivo())){
+			builder.and(qClube.ativo.eq(new Boolean(filtro.getAtivo())));
+		}
+		
+		if(!Strings.isNullOrEmpty(filtro.getCnpj())){
+			builder.and(qClube.cnpj.containsIgnoreCase(filtro.getCnpj()));
+		}
 	
 		return builder;
 	}
