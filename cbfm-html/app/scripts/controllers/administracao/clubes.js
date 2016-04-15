@@ -32,11 +32,9 @@ angular.module(GLOBAL.nameApp)
 
 		$scope.listFederacoes = function() {
 
-
 			federacoesService.federacoesResource().query({sigla: $scope.filterDTO.sigla, nome: $scope.filterDTO.nome, uf: $scope.filterDTO.uf}).$promise
 					.then(function (response) {
 			          	$scope.federacoes = response;
-			          	//console.log('GET /rest/secure returned: ', response);
 			        }).catch(function(response) {
 			          	handleError(response);
 			        });
@@ -47,7 +45,7 @@ angular.module(GLOBAL.nameApp)
 
 			$scope.clearAll();
 
-			clubesService.clubesResource().query({federacaoId: 0, nome: $scope.filterDTO.nome, responsavel: $scope.filterDTO.responsavel, email: $scope.filterDTO.email, cnpj: $scope.filterDTO.cnpj}).$promise
+			clubesService.clubesResource().query({federacao: $scope.filterDTO.federacao, nome: $scope.filterDTO.nome, responsavel: $scope.filterDTO.responsavel, email: $scope.filterDTO.email, cnpj: $scope.filterDTO.cnpj, ativo: $scope.filterDTO.ativo}).$promise
 					.then(function (response) {
 			          	$scope.itemsList = response;
 			        }).catch(function(response) {
@@ -85,7 +83,7 @@ angular.module(GLOBAL.nameApp)
 		};
 
 		$scope.clickFilterPesquisa = function() {
-			$scope.clickFilterTransition();
+			// $scope.clickFilterTransition();
 			$scope.filter();
 		};
 

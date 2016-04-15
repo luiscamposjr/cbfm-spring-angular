@@ -65,9 +65,10 @@
 .crud-form-select-uf {
   width: 50px;
 }
-.crud-alert-error-message {
-  margin-left: 10px;
-  margin-right: 10px;
+.crud-form-checkbox {
+  width: 100%;
+  height: 34px;
+  top: -13px;
 }
 .fw-datagrid thead {
   /*background-color: #286090;

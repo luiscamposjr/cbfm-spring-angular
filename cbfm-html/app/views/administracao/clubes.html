@@ -23,8 +23,8 @@
 					  </div>
 					  <div class="form-group col-md-4">
 					    <label for="federacao">Federacao</label>
-						<select ng-model="selectedRow.uf" class="form-control" placeholder="Selecione">
-							<option ng-repeat="e in federacoes" value="{{e.id}}" >{{e.nome}}</option>
+						<select ng-model="filterDTO.federacao" class="form-control" placeholder="Selecione">
+							<option ng-repeat="e in federacoes" value="{{e.id}}" >{{e.sigla}}</option>
 						</select>
 					  </div>
 					  <div class="form-group col-md-4">
@@ -40,8 +40,12 @@
 					    <input type="text" class="form-control" id="email" placeholder="E-mail" ng-model="filterDTO.email">
 					  </div>
 					  <div class="form-group col-md-4">
-					    <label for="ativo">Ativo</label>
-					    <input type="text" class="form-control" id="ativo" placeholder="Ativo" ng-model="filterDTO.ativo">
+					    <label>Ativo</label>
+							<select ng-model="filterDTO.ativo" class="form-control">
+								<option value=""></option>
+								<option value="true" >Sim</option>
+								<option value="false" >Não</option>
+							</select>
 					  </div>
 					  <div class="form-group col-md-4">
 					    <label for="cnpj">CNPJ</label>
@@ -97,7 +101,7 @@
 				</thead>
 				<tbody>
 					<tr ng-repeat="row in itemsList" ng-class="{'selected':row == selectedRow}" ng-click="setClickedRow(row)" ng-dblclick="itemDoubleClick(row)">
-						<td class="firstColumn">{{row.federacao.sigla}}</td>
+						<td class="firstColumn">{{row.federacao.id}}</td>
 						<td>{{row.nome}}</td>
 						<td>{{row.responsavel}}</td>
 						<td>{{row.email}}</td>

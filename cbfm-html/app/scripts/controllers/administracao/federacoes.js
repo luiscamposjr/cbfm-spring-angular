@@ -35,7 +35,6 @@ angular.module(GLOBAL.nameApp)
 			federacoesService.federacoesResource().query({sigla: $scope.filterDTO.sigla, nome: $scope.filterDTO.nome, uf: $scope.filterDTO.uf}).$promise
 					.then(function (response) {
 			          	$scope.itemsList = response;
-			          	//console.log('GET /rest/secure returned: ', response);
 			        }).catch(function(response) {
 			          	handleError(response);
 			        });
