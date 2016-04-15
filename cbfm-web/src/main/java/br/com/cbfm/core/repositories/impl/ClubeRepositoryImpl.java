@@ -14,10 +14,7 @@ import com.mysema.query.types.Predicate;
 import com.mysema.query.types.Projections;
 
 import br.com.cbfm.core.dto.FilterClubeDTO;
-import br.com.cbfm.core.models.AbstractEntity;
 import br.com.cbfm.core.models.Clube;
-import br.com.cbfm.core.models.Federacao;
-import br.com.cbfm.core.models.QAbstractEntity;
 import br.com.cbfm.core.models.QClube;
 import br.com.cbfm.core.models.QFederacao;
 import br.com.cbfm.core.repositories.ClubeRepositoryCustom;
@@ -35,7 +32,6 @@ public class ClubeRepositoryImpl extends QueryDslRepositorySupport implements Cl
 
 	private static final QClube qClube = QClube.clube;
 	private static final QFederacao qFederacao = QFederacao.federacao;
-	private static final QAbstractEntity qAbstractEntity = QAbstractEntity.abstractEntity;
 
 	/**
 	 * Creates a new instance of {@link ClubeRepositoryImpl}.
@@ -55,7 +51,7 @@ public class ClubeRepositoryImpl extends QueryDslRepositorySupport implements Cl
  			.where(predicate)
 			.orderBy(qClube.id.desc())
 			.list(Projections.fields(qClube, qClube.id, qClube.nome, qClube.ativo, qClube.cnpj, qClube.email, qClube.responsavel, 
-				  Projections.fields(Federacao.class, qClube.federacao.id).as("federacao")));
+				  Projections.fields(qFederacao, qClube.federacao.id, qClube.federacao.sigla).as("federacao")));
 	}
 	
  	public static Predicate filterPredicate(FilterClubeDTO filtro) {

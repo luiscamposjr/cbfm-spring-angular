@@ -11,7 +11,7 @@
 		
 
 		<!-- Filter inicio -->
-		<div class="panel-body" ng-show="!showForm">
+		<div class="panel-body" ng-show="!showForm" ng-click="clickFilterTransition()">
 
 			<div class="container-fluid filter-container">
 				<form ng-show="showFilter" id="filterForm">
@@ -101,7 +101,7 @@
 				</thead>
 				<tbody>
 					<tr ng-repeat="row in itemsList" ng-class="{'selected':row == selectedRow}" ng-click="setClickedRow(row)" ng-dblclick="itemDoubleClick(row)">
-						<td class="firstColumn">{{row.federacao.id}}</td>
+						<td class="firstColumn">{{row.federacao.sigla}}</td>
 						<td>{{row.nome}}</td>
 						<td>{{row.responsavel}}</td>
 						<td>{{row.email}}</td>
