@@ -7,3 +7,5 @@ Using
   AngularJS
   Spring-Boot
   Spring-Security
+  Spring-Data
+  QueryDSL
