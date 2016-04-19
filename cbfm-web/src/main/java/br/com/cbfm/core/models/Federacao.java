@@ -9,6 +9,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 @Entity
 @Table(name = "federacoes")
@@ -23,6 +25,7 @@ public class Federacao extends AbstractEntity{
 	private String uf;
 	private String nome;	
 	
+	@JsonIgnore
 	@OneToMany(mappedBy="federacao")
     private Set<Clube> clubes;
 	

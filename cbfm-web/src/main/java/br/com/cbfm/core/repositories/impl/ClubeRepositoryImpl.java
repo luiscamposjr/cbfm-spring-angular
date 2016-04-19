@@ -50,8 +50,8 @@ public class ClubeRepositoryImpl extends QueryDslRepositorySupport implements Cl
  			.innerJoin(qClube.federacao, qFederacao)
  			.where(predicate)
 			.orderBy(qClube.id.desc())
-			.list(Projections.fields(qClube, qClube.id, qClube.nome, qClube.ativo, qClube.cnpj, qClube.email, qClube.responsavel, 
-				  Projections.fields(qFederacao, qClube.federacao.id, qClube.federacao.sigla).as("federacao")));
+			.list(Projections.bean(qClube, qClube.id, qClube.nome, qClube.ativo, qClube.cnpj, qClube.email, qClube.responsavel, 
+				  Projections.bean(qFederacao, qClube.federacao.id, qClube.federacao.sigla, qClube.federacao.nome, qClube.federacao.uf).as("federacao")));
 	}
 	
  	public static Predicate filterPredicate(FilterClubeDTO filtro) {

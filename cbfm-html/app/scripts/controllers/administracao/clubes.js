@@ -98,13 +98,15 @@ angular.module(GLOBAL.nameApp)
 
 		$scope.saveItem = function() {
 
+			console.log($scope.selectedRow.federacao);
+
 			if($scope.selectedRow.id !== undefined && $scope.selectedRow.id > 0) {
 
 				Csrf.addResourcesCsrfToHeaders(clubesService.clubesResource().options, $http.defaults.headers.put).then(function (headers) 
 				{
 
 						clubesService.clubesResource(headers).update(
-							{id: $scope.selectedRow.id, sigla: $scope.selectedRow.sigla, nome: $scope.selectedRow.nome, uf: $scope.selectedRow.uf})
+							{id: $scope.selectedRow.id, nome: $scope.selectedRow.nome, cnpj: $scope.selectedRow.cnpj, email: $scope.selectedRow.email, responsavel: $scope.selectedRow.responsavel, ativo: $scope.selectedRow.ativo, federacao: { id: $scope.selectedRow.federacao } })
 						.$promise.then(function () {
 							toaster.pop('info', 'Atenção', 'Item atualizado com sucesso.', 3000);
 							$scope.showForm = false;
@@ -119,8 +121,9 @@ angular.module(GLOBAL.nameApp)
 
 				Csrf.addResourcesCsrfToHeaders(clubesService.clubesResource().options, $http.defaults.headers.post).then(function (headers) 
 				{
+
 						clubesService.clubesResource(headers).post(
-							{id: $scope.selectedRow.id, sigla: $scope.selectedRow.sigla, nome: $scope.selectedRow.nome, uf: $scope.selectedRow.uf})
+							{id: $scope.selectedRow.id, nome: $scope.selectedRow.nome, cnpj: $scope.selectedRow.cnpj, email: $scope.selectedRow.email, responsavel: $scope.selectedRow.responsavel, ativo: $scope.selectedRow.ativo, federacao: { id: $scope.selectedRow.federacao } })
 						.$promise.then(function () {
 							toaster.pop('info', 'Atenção', 'Item adicionado com sucesso.', 3000);
 							$scope.showForm = false;

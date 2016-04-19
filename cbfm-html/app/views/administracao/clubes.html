@@ -11,7 +11,7 @@
 		
 
 		<!-- Filter inicio -->
-		<div class="panel-body" ng-show="!showForm" ng-click="clickFilterTransition()">
+		<div class="panel-body" ng-show="!showForm" >
 
 			<div class="container-fluid filter-container">
 				<form ng-show="showFilter" id="filterForm">
@@ -112,7 +112,7 @@
 			</table>
 		</div>
 
-		<ul class="pagination" ng-show="!showForm">
+		<!-- <ul class="pagination" ng-show="!showForm">
 				<li class="disabled"><a href="#">&laquo;</a></li>
 				<li class="active"><a href="#">1</a></li>
 				<li><a href="#">2</a></li>
@@ -120,32 +120,49 @@
 				<li><a href="#">4</a></li>
 				<li><a href="#">5</a></li>
 				<li><a href="#">&raquo;</a></li>
-		</ul>
+		</ul> -->
 
 		<!-- Form -->
 		<div class="panel-body" ng-show="showForm">
 
 		<form>
 
-		<div class="row">
-			<div class="form-group col-md-6">
-				<label>Sigla</label>
-				<input type="text" class="form-control" placeholder="Sigla" ng-model="selectedRow.sigla" required>
+			<div class="row">
+				<div class="form-group col-md-6">
+					<label>Nome</label>
+					<input type="text" class="form-control" placeholder="Nome" ng-model="selectedRow.nome" required>
+				</div>
+				<div class="form-group col-md-6">
+					<label>CNPJ</label>
+					<input type="text" class="form-control" placeholder="CNPJ"ng-model="selectedRow.cnpj" required>
+				</div>
 			</div>
-			<div class="form-group col-md-6">
-				<label>Nome</label>
-				<input type="text" class="form-control" placeholder="Nome"ng-model="selectedRow.nome" required>
-			</div>
-		</div>		
-		<div class="row">
-			<div class="form-group col-md-6">
-				<label>UF</label>
-				<select ng-model="selectedRow.uf" class="form-control crud-form-select-uf">
-					<option ng-repeat="e in estadosBrasileiros" value="{{e.Sigla}}" ng-selected="selectedRow.uf==e.Sigla">{{e.Sigla}}</option>
 
-				</select>
-			</div>				
-		</div>
+			<div class="row">
+				<div class="form-group col-md-6">
+					<label>E-mail</label>
+					<input type="text" class="form-control" placeholder="E-mail" ng-model="selectedRow.email" required>
+				</div>
+				<div class="form-group col-md-6">
+					<label>Responsável</label>
+					<input type="text" class="form-control" placeholder="Responsável"ng-model="selectedRow.responsavel" required>
+				</div>
+			</div>	
+
+
+			<div class="row">
+				<div class="form-group col-md-6">
+					<label>Ativo</label>
+					<input type="checkbox" class="crud-form-checkbox" ng-model="selectedRow.ativo" />
+				</div>
+				<div class="form-group col-md-6">
+					<label>Federação</label>
+					<select ng-model="selectedRow.federacao" class="form-control" placeholder="Selecione">
+						<option ng-repeat="e in federacoes" value="{{e.id}}">{{e.sigla}}</option>
+					</select>
+				</div>
+			</div>			
+
 
 		</form>
 
