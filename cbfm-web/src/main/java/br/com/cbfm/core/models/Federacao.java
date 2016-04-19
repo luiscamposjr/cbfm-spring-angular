@@ -18,7 +18,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @AttributeOverride(name = "id", column = @Column(name = "id_federacao"))
 public class Federacao extends AbstractEntity{
 	
-	
 	private static final long serialVersionUID = 9025004657033297345L;
 	
 	private String sigla;

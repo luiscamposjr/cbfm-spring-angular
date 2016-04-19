@@ -54,6 +54,7 @@ public class ClubeRepositoryImpl extends QueryDslRepositorySupport implements Cl
 				  Projections.bean(qFederacao, qClube.federacao.id, qClube.federacao.sigla, qClube.federacao.nome, qClube.federacao.uf).as("federacao")));
 	}
 	
+	
  	public static Predicate filterPredicate(FilterClubeDTO filtro) {
 	
 		BooleanBuilder builder = new BooleanBuilder();

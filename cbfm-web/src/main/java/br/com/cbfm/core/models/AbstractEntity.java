@@ -25,6 +25,7 @@ import org.springframework.data.domain.Persistable;
 @MappedSuperclass
 public class AbstractEntity implements Persistable<Long> {
 
+	
 	public AbstractEntity() {
 		super();
 	}
