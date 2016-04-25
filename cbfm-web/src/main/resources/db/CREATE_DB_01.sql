@@ -27,3 +27,34 @@ CREATE TABLE clubes
 		ON UPDATE CASCADE
         ON DELETE RESTRICT
 );
+
+CREATE TABLE users
+(
+  id_user serial NOT NULL,
+  username character varying(45) NOT NULL,
+  password character varying(60) NOT NULL,
+  email character varying(255) NOT NULL,
+  enabled integer NOT NULL DEFAULT 1,
+  CONSTRAINT users_pkey 
+    PRIMARY KEY (id_user)
+);
+
+CREATE TABLE roles
+(
+  id_role serial NOT NULL,
+  name character varying(255),
+  CONSTRAINT roles_pkey PRIMARY KEY (id_role)
+);
+
+CREATE TABLE user_role
+(
+  id_user integer NOT NULL,
+  id_role integer NOT NULL,
+  CONSTRAINT user_role_pkey 
+    PRIMARY KEY (id_user, id_role),
+  CONSTRAINT constraint_fk_user_role
+    FOREIGN KEY (id_role)
+      REFERENCES roles (id_role) 
+      MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+);

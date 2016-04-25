@@ -1,11 +1,13 @@
 package br.com.cbfm.core.security;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.access.channel.ChannelProcessingFilter;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
@@ -34,11 +36,13 @@ public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
 	private CORSFilter corsFilter;
 	@Resource
 	private LogoutSuccessHandler logoutSuccessHandler;
-
-	@Override
-	protected void configure(AuthenticationManagerBuilder builder) throws Exception {
-		builder.inMemoryAuthentication().withUser("user").password("user").roles("USER").and().withUser("admin")
-			.password("admin").roles("ADMIN");
+	
+	@Autowired
+	private UserDetailsService userDetailsService;
+	
+	@Autowired
+	public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
+		auth.userDetailsService(userDetailsService);
 	}
 
 	@Override
