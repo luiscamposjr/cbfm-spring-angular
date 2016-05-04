@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -24,6 +25,7 @@ import br.com.cbfm.core.security.csrf.CsrfTokenResponseCookieBindingFilter;
 import javax.annotation.Resource;
 
 @Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
+@EnableGlobalMethodSecurity(securedEnabled = true)
 public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
 
 	@Resource
@@ -51,7 +53,7 @@ public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
 			.antMatchers(HttpMethod.OPTIONS, "/*/**").permitAll()
 			.antMatchers("/login", "/rest/open/**").permitAll()
 			.antMatchers("/logout", "/rest/**").authenticated();
-
+		
 		// Handlers and entry points
 		http.exceptionHandling().authenticationEntryPoint(authenticationEntryPoint);
 		http.formLogin().successHandler(authenticationSuccessHandler);

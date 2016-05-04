@@ -1,12 +1,17 @@
 package br.com.cbfm.core.models;
 
+import java.util.Set;
+
 import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 @Entity
@@ -27,7 +32,19 @@ public class Clube extends AbstractEntity{
     @ManyToOne
     @JoinColumn(name="id_federacao", nullable=false)
     private Federacao federacao;
+    
+	@JsonIgnore
+	@OneToMany(mappedBy="clube")
+    private Set<Atleta> atletas;
 	
+	public Set<Atleta> getAtletas() {
+		return atletas;
+	}
+
+	public void setAtletas(Set<Atleta> atletas) {
+		this.atletas = atletas;
+	}
+
 	public Federacao getFederacao() {
 		return federacao;
 	}

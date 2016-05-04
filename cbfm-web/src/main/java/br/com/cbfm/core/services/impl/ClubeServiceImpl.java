@@ -3,6 +3,8 @@ package br.com.cbfm.core.services.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,6 +37,7 @@ public class ClubeServiceImpl implements ClubeService{
 		return (List<Clube>) clubeRepository.findAll();
 	}
 
+	@Secured({"ROLE_USER", "ROLE_ADMIN"})
 	public List<Clube> findAll(FilterClubeDTO filterClubeDTO) {
 		return (List<Clube>) clubeRepository.findAll(filterClubeDTO);
 	}

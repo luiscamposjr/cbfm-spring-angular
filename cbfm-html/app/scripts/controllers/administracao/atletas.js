@@ -1,7 +1,7 @@
 'use strict';
 angular.module(GLOBAL.nameApp)
-	.controller('ClubesController', ['$scope', 'clubesService', 'federacoesService', '$location', 'Csrf', '$http', 'CONST_UTIL', 'toaster', '$animate', 
-		function($scope, clubesService, federacoesService, $location, Csrf, $http, CONST_UTIL, toaster) {
+	.controller('AtletasController', ['$scope', 'atletasService', 'clubesService', 'federacoesService', '$location', 'Csrf', '$http', 'CONST_UTIL', 'toaster', '$animate', 
+		function($scope, atletasService, clubesService, federacoesService, $location, Csrf, $http, CONST_UTIL, toaster) {
 
 		$scope.showFilter = false;
 		$scope.showForm = false;
@@ -13,14 +13,18 @@ angular.module(GLOBAL.nameApp)
 
 		$scope.clubes = [];
 		$scope.federacoes = [];
+		$scope.atletas = [];
+
+		$scope.dataDefault = "19/06/1985";
 
 		
 		
-		$scope.init = function (){
+		$scope.init = function () {
 
 			$scope.showFilter = false;
 			$scope.showForm = false;
 			$scope.filter();
+			$scope.listClubes();
 			$scope.listFederacoes();
 
 		};
@@ -28,6 +32,17 @@ angular.module(GLOBAL.nameApp)
 		$scope.clearAll = function(){
 			$scope.itemsList.length = 0;
 			$scope.selectedRow = {};
+		};
+
+		$scope.listClubes = function() {
+
+			clubesService.clubesResource().query().$promise
+					.then(function (response) {
+			          	$scope.clubes = response;
+			        }).catch(function(response) {
+			          	handleError(response);
+			        });
+
 		};
 
 		$scope.listFederacoes = function() {
@@ -41,11 +56,12 @@ angular.module(GLOBAL.nameApp)
 
 		};
 
+
 		$scope.filter = function(){
 
 			$scope.clearAll();
 
-			clubesService.clubesResource().query({federacao: $scope.filterDTO.federacao, nome: $scope.filterDTO.nome, responsavel: $scope.filterDTO.responsavel, email: $scope.filterDTO.email, cnpj: $scope.filterDTO.cnpj, ativo: $scope.filterDTO.ativo}).$promise
+			atletasService.atletasResource().query({nome: $scope.filterDTO.nome, federacao: $scope.filterDTO.federacao, clube: $scope.filterDTO.clube, ativo: $scope.filterDTO.ativo}).$promise
 					.then(function (response) {
 			          	$scope.itemsList = response;
 			        }).catch(function(response) {
@@ -102,10 +118,10 @@ angular.module(GLOBAL.nameApp)
 
 			if($scope.selectedRow.id !== undefined && $scope.selectedRow.id > 0) {
 
-				Csrf.addResourcesCsrfToHeaders(clubesService.clubesResource().options, $http.defaults.headers.put).then(function (headers) 
+				Csrf.addResourcesCsrfToHeaders(atletasService.atletasResource().options, $http.defaults.headers.put).then(function (headers) 
 				{
 
-						clubesService.clubesResource(headers).update(
+						atletasService.atletasResource(headers).update(
 							{id: $scope.selectedRow.id, nome: $scope.selectedRow.nome, cnpj: $scope.selectedRow.cnpj, email: $scope.selectedRow.email, responsavel: $scope.selectedRow.responsavel, ativo: $scope.selectedRow.ativo, federacao: { id: $scope.selectedRow.federacao } })
 						.$promise.then(function () {
 							toaster.pop('info', 'Atenção', 'Item atualizado com sucesso.', 3000);
@@ -119,10 +135,10 @@ angular.module(GLOBAL.nameApp)
 
 			} else {
 
-				Csrf.addResourcesCsrfToHeaders(clubesService.clubesResource().options, $http.defaults.headers.post).then(function (headers) 
+				Csrf.addResourcesCsrfToHeaders(atletasService.atletasResource().options, $http.defaults.headers.post).then(function (headers) 
 				{
 
-						clubesService.clubesResource(headers).post(
+						atletasService.atletasResource(headers).post(
 							{id: $scope.selectedRow.id, nome: $scope.selectedRow.nome, cnpj: $scope.selectedRow.cnpj, email: $scope.selectedRow.email, responsavel: $scope.selectedRow.responsavel, ativo: $scope.selectedRow.ativo, federacao: { id: $scope.selectedRow.federacao } })
 						.$promise.then(function () {
 							toaster.pop('info', 'Atenção', 'Item adicionado com sucesso.', 3000);

@@ -28,12 +28,28 @@ CREATE TABLE clubes
         ON DELETE RESTRICT
 );
 
+CREATE TABLE atletas 
+(
+	id_atleta serial NOT NULL,
+	nome VARCHAR(255),
+	data_nascimento DATE,
+	ativo boolean,
+	id_clube INT NOT NULL,
+	CONSTRAINT  atletas_pkey
+		PRIMARY KEY (id_atleta),
+	CONSTRAINT constraint_fk_id_clube
+		FOREIGN KEY (id_clube)
+		REFERENCES clubes(id_clube)
+		ON UPDATE CASCADE
+        ON DELETE RESTRICT
+);
+        
 CREATE TABLE users
 (
   id_user serial NOT NULL,
-  username character varying(45) NOT NULL,
-  password character varying(60) NOT NULL,
-  email character varying(255) NOT NULL,
+  username VARCHAR(45) NOT NULL,
+  password VARCHAR(60) NOT NULL,
+  email VARCHAR(255) NOT NULL,
   enabled integer NOT NULL DEFAULT 1,
   CONSTRAINT users_pkey 
     PRIMARY KEY (id_user)
@@ -42,7 +58,7 @@ CREATE TABLE users
 CREATE TABLE roles
 (
   id_role serial NOT NULL,
-  name character varying(255),
+  name VARCHAR(255),
   CONSTRAINT roles_pkey PRIMARY KEY (id_role)
 );
 

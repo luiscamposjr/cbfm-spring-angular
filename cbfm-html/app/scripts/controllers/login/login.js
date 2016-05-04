@@ -15,6 +15,7 @@ angular.module(GLOBAL.nameApp)
 
 			loginService.login($scope.credentials.username, $scope.credentials.password, function () {
 				$location.url('/');
+				// console.info('The user has been successfully logged in! ', data, status, headers, config);
 			}, function() {
 				toaster.pop('error', 'Atenção', 'Ocorreu uma falha no login.', 3000);
 			});
