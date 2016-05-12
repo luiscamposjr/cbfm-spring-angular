@@ -25,7 +25,8 @@ angular
     'toaster'
   ]);
 
-angular.module(GLOBAL.nameApp).config(['$routeProvider', '$locationProvider', '$httpProvider', 
+angular.module(GLOBAL.nameApp)
+  .config(['$routeProvider', '$locationProvider', '$httpProvider', 
     function ($routeProvider, $locationProvider, $httpProvider) {
 
     $routeProvider
@@ -53,6 +54,11 @@ angular.module(GLOBAL.nameApp).config(['$routeProvider', '$locationProvider', '$
         templateUrl: 'views/administracao/atletas.html',
         controller: 'AtletasController',
         controllerAs: 'Atletas'
+      })
+      .when('/administracao/usuarios', {
+        templateUrl: 'views/administracao/usuarios.html',
+        controller: 'UsuariosController',
+        controllerAs: 'Usuarios'
       })
       .otherwise({
         redirectTo: '/'
