@@ -1,7 +1,7 @@
 package br.com.cbfm.core.models;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.Collection;
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.CascadeType;
@@ -13,6 +13,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 
@@ -28,6 +30,7 @@ public class User extends AbstractEntity{
 	@Column(name = "username")
     private String username;   
 
+	@JsonIgnore
 	@Column(name = "password")
     private String password;   
 
@@ -37,13 +40,13 @@ public class User extends AbstractEntity{
 	@Column(name ="enabled")
 	private int enabled;
 	
-	@ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
             name = "user_role",
             joinColumns = @JoinColumn(name = "id_user"),
             inverseJoinColumns = @JoinColumn(name = "id_role")
     )
-    private Set<Role> roles = new HashSet<>();
+    private Collection<Role> roles = new ArrayList<Role>();
 	
 	public User() {
 	}
@@ -56,11 +59,11 @@ public class User extends AbstractEntity{
 		this.enabled = user.enabled;
 	}
 
-	public String getUserName() {
+	public String getUsername() {
 		return username;
 	}
 
-	public void setUserName(String userName) {
+	public void setUsername(String userName) {
 		this.username = userName;
 	}
 
@@ -88,11 +91,11 @@ public class User extends AbstractEntity{
 		this.enabled = enabled;
 	}
 
-    public Set<Role> getRoles() {
+    public Collection<Role> getRoles() {
         return roles;
     }
 
-    public void setRoles(final Set<Role> roles) {
+    public void setRoles(final Collection<Role> roles) {
         this.roles = roles;
     }
 }

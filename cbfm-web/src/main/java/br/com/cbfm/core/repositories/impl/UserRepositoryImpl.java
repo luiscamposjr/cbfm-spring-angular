@@ -8,9 +8,11 @@ import javax.persistence.PersistenceContext;
 
 import org.springframework.data.jpa.repository.support.QueryDslRepositorySupport;
 
+import com.google.common.base.Strings;
 import com.mysema.query.BooleanBuilder;
 import com.mysema.query.jpa.impl.JPAQuery;
 import com.mysema.query.types.Predicate;
+import com.mysema.query.types.Projections;
 
 import br.com.cbfm.core.dto.FilterUserDTO;
 import br.com.cbfm.core.models.QUser;
@@ -45,25 +47,22 @@ public class UserRepositoryImpl extends QueryDslRepositorySupport implements Use
  		return query.from(qUser)
 			.where(predicate)
 			.orderBy(qUser.id.desc())
-			.list(qUser);
-		
+			.list(Projections.bean(User.class, qUser.id, qUser.username, qUser.email, qUser.password));
+ 		
 	}
 	
  	public static Predicate filterPredicate(FilterUserDTO filtro) {
 	
 		BooleanBuilder builder = new BooleanBuilder();
 	
-//		if(!Strings.isNullOrEmpty(filtro.getNome())){
-//			builder.and(qFederacao.nome.containsIgnoreCase(filtro.getNome()));
-//		}
-//	
-//		if(!Strings.isNullOrEmpty(filtro.getSigla())){
-//			builder.and(qFederacao.sigla.containsIgnoreCase(filtro.getSigla()));
-//		}
-//	
-//		if(!Strings.isNullOrEmpty(filtro.getUf())){
-//			builder.and(qFederacao.uf.containsIgnoreCase(filtro.getUf()));
-//		}
+		if(!Strings.isNullOrEmpty(filtro.getUsername())){
+			builder.and(qUser.username.containsIgnoreCase(filtro.getUsername()));
+		}
+	
+		if(!Strings.isNullOrEmpty(filtro.getEmail())){
+			builder.and(qUser.email.containsIgnoreCase(filtro.getEmail()));
+		}
+		
 	
 		return builder;
 	}

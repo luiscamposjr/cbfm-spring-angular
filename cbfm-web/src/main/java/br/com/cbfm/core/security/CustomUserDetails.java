@@ -17,6 +17,7 @@ public class CustomUserDetails extends User implements UserDetails{
 	
 	public CustomUserDetails(User user){
 		super(user);
+		this.setRoles(user.getRoles());
 	}
 	
 	@Override
@@ -53,7 +54,7 @@ public class CustomUserDetails extends User implements UserDetails{
 
 	@Override
 	public String getUsername() {
-		return super.getUserName();
+		return super.getUsername();
 	}
 
 }

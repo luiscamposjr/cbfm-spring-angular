@@ -30,7 +30,6 @@ public class FederacaoRepositoryImpl extends QueryDslRepositorySupport implement
 	private EntityManager em;
 
 	private static final QFederacao qFederacao = QFederacao.federacao;
-	private static final QAbstractEntity qAbstractEntity = QAbstractEntity.abstractEntity;
 
 	/**
 	 * Creates a new instance of {@link FederacaoRepositoryImpl}.

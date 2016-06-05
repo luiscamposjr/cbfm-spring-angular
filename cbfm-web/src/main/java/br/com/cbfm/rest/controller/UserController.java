@@ -1,6 +1,6 @@
 package br.com.cbfm.rest.controller;
 
-
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,37 +19,43 @@ import br.com.cbfm.core.services.UserService;
 @RequestMapping("/rest/usuarios")
 @RestController
 public class UserController {
-	
+
 	@Autowired
 	private UserService userService;
-	
+
 	@RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<List<User>> listAllFederacoes(FilterUserDTO filterUserDTO) {
-		
+	public ResponseEntity<List<User>> listAllUsuarios(FilterUserDTO filterUserDTO) {
+
 		List<User> users = userService.findAll(filterUserDTO);
 
-        if(users.isEmpty()){
-            return new ResponseEntity<List<User>>(HttpStatus.NO_CONTENT);
-        }
-        return new ResponseEntity<List<User>>(users, HttpStatus.OK);
-    }
-	
+		if (users.isEmpty()) {
+			return new ResponseEntity<List<User>>(HttpStatus.NO_CONTENT);
+		}
+		return new ResponseEntity<List<User>>(users, HttpStatus.OK);
+	}
+
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<User> saveUser(@RequestBody User user) {
 		userService.saveUser(user);
 		return new ResponseEntity<User>(HttpStatus.OK);
 	}
-	
+
 	@RequestMapping(method = RequestMethod.PUT)
-	public ResponseEntity<User> updateFederacao(@RequestBody User user) {
-			userService.updateUser(user);
+	public ResponseEntity<User> updateUser(@RequestBody User user) {
+		userService.updateUser(user);
 		return new ResponseEntity<User>(HttpStatus.OK);
 	}
-	
+
 	@RequestMapping(value = "/usuario/{id}", method = RequestMethod.DELETE)
-	public ResponseEntity<User> deleteFederacao(@PathVariable("id") long id) {
+	public ResponseEntity<User> deleteUser(@PathVariable("id") long id) {
 		userService.deleteUser(id);
 		return new ResponseEntity<User>(HttpStatus.OK);
 	}
-	
+
+	@RequestMapping(value = "/user")
+	public Principal user(Principal user) {
+		return user;
+	}
+
+
 }

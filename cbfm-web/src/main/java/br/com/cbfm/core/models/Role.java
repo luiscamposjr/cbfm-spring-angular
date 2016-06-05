@@ -1,7 +1,6 @@
 package br.com.cbfm.core.models;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Collection;
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
@@ -25,7 +24,7 @@ public class Role extends AbstractEntity {
 
     @JsonIgnore
     @ManyToMany(mappedBy = "roles")
-    private Set<User> users = new HashSet<>();
+    private Collection<User> users;
 
     public String getName() {
         return name;
@@ -35,11 +34,11 @@ public class Role extends AbstractEntity {
         this.name = name;
     }
 
-    public Set<User> getUsers() {
+    public Collection<User> getUsers() {
         return users;
     }
 
-    public void setUsers(final Set<User> users) {
+    public void setUsers(Collection<User> users) {
         this.users = users;
     }
 
