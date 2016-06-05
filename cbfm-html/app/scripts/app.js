@@ -11,7 +11,9 @@
 
 (function(w) {
   w.GLOBAL = {
-    nameApp: 'cbfmHtmlApp'
+    nameApp: 'cbfmHtmlApp',
+    version: "0.0.1",
+    nameSystem: "CBFM Manager"
   };
 
 })(window);
@@ -32,7 +34,7 @@ angular.module(GLOBAL.nameApp)
     $routeProvider
       .when('/', {
         templateUrl: 'views/main.html',
-        controller: 'MainCtrl',
+        controller: 'MainController',
         controllerAs: 'main'
       })
       .when('/administracao/federacoes', {
@@ -42,8 +44,8 @@ angular.module(GLOBAL.nameApp)
       })
       .when('/login', {
         templateUrl: 'views/login/login.html',
-        controller: 'LoginController',
-        controllerAs: 'Login'
+        controller: 'AuthController',
+        controllerAs: 'Auth'
       })
       .when('/administracao/clubes', {
         templateUrl: 'views/administracao/clubes.html',

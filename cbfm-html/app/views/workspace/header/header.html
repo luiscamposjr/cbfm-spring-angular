@@ -34,19 +34,22 @@
                         </ul>
                       </li> -->
                       
-                      <li>
-                        <a href="/#/administracao/federacoes" tabindex="-1"><span class="glyphicon glyphicon-fire pull-left icon-menu-item"></span>Federações</a>
+                      <li><a href="/#/administracao/federacoes" tabindex="-1"><span class="glyphicon glyphicon-fire pull-left icon-menu-item"></span>Federações</a>
                       </li>
                       <li><a href="/#/administracao/clubes" tabindex="-1"><span class="glyphicon glyphicon-leaf pull-left icon-menu-item"></span>Clubes</a></li>
                       <li><a href="/#/administracao/atletas" tabindex="-1"><span class="glyphicon glyphicon-globe pull-left icon-menu-item"></span>Atletas</a></li>
                       <li class="divider"></li>
                       <li><a href="/#/administracao/usuarios" tabindex="-1"><span class="glyphicon glyphicon-user pull-left icon-menu-item"></span>Usuários</a></li>
+                      
+
+
+                      
                     </ul>
                   </li>
                   
                 </ul>
-                <ul class="nav navbar-nav navbar-right" ng-controller="LoginController">
-                  <li class="dropdown" id="fat-menu"> <a data-toggle="dropdown" class="dropdown-toggle" role="button" id="drop3" href="#/">Conta <b class="caret"></b></a>
+                <ul class="nav navbar-nav navbar-right" ng-controller="AuthController">
+                  <li class="dropdown" id="fat-menu"> <a data-toggle="dropdown" class="dropdown-toggle" role="button" id="drop3" href="#/">Conta {{currentUser.name}}<b class="caret"></b></a>
                     <ul aria-labelledby="drop3" role="menu" class="dropdown-menu">
                       <li role="presentation"><a href="http://twitter.com/luiscamposjr" tabindex="-1" role="menuitem">Sobre</a></li>
                       <li class="divider" role="presentation"></li>

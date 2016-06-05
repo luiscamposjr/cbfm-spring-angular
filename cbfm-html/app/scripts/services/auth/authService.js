@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module(GLOBAL.nameApp).factory("loginService", function ($http, $resource, Cookies, toaster) {
+angular.module(GLOBAL.nameApp).factory("authService", function ($http, $resource, Cookies, toaster) {
 
 	var loginResources = $resource('http://localhost:8080/login', {}, {
 		options: {method: 'OPTIONS', cache: false}
@@ -10,6 +10,9 @@ angular.module(GLOBAL.nameApp).factory("loginService", function ($http, $resourc
 		options: {method: 'OPTIONS', cache: false}
 	});
 
+	// var userResources = $resource('http://localhost:8080/user', {}, {
+	// });
+
 	/**
 	 * Detect whether the response elements returned indicate an invalid or missing CSRF token...
 	 */
@@ -17,6 +20,13 @@ angular.module(GLOBAL.nameApp).factory("loginService", function ($http, $resourc
 		return (status === 403 && data.message && data.message.toLowerCase().indexOf('csrf') > -1) || (status === 0 && data === null);
 	};
 
+	var _currentUser = function () {
+
+		return $http({
+		  method: 'GET',
+		  url: 'http://localhost:8080/rest/usuarios/user'
+		});
+	};
 
     var _login = function (username, password, successHandler, errorHandler) {
       
@@ -96,6 +106,7 @@ angular.module(GLOBAL.nameApp).factory("loginService", function ($http, $resourc
 
   return {
     login: _login,
-    logout: _logout
+    logout: _logout,
+    currentUser: _currentUser
   };
 });

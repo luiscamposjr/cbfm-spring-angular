@@ -1,3 +1,26 @@
+body {
+    @background-color-a: #FFFFFF;
+    @background-color-b: #FCFCFC;
+    @background-color-c: #FAFAFA;
+
+    height: 500px;
+    width: 100%;
+    background: @background-color-a; 
+    background: -webkit-radial-gradient(@background-color-a, @background-color-b, @background-color-c); 
+    background: -o-radial-gradient(@background-color-a, @background-color-b, @background-color-c);
+    background: -moz-radial-gradient(@background-color-a, @background-color-b, @background-color-c); 
+    background: radial-gradient(@background-color-a, @background-color-b, @background-color-c); 
+}
+
+.container-main{
+    background-color: transparent;
+    /*border: 1px;*/
+
+    .table-responsive{
+        background-color: #FFF;
+    }
+}
+
 .gap-top {
 	margin-top: 65px;
 }

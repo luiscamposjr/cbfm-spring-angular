@@ -3,6 +3,31 @@
   max-width: 330px;
   padding: 15px;
   margin: 0 auto;
+
+  @signin-border-radius-size: 10px;
+
+  input.signin-username{
+    margin-bottom: -1px;
+    border-top-right-radius: @signin-border-radius-size;
+    border-top-left-radius: @signin-border-radius-size;
+    border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 0px;
+  }
+
+  input.signin-password{
+    margin-bottom: -1px;
+    border-radius: 0px;
+  }
+
+  button.signin-submit {
+    border-radius: 0px;
+    border-bottom-right-radius: @signin-border-radius-size;
+    border-bottom-left-radius: @signin-border-radius-size;
+  }
+
+
+
+
 }
 .form-signin .form-signin-heading,
 .form-signin .checkbox {
@@ -24,7 +49,7 @@
 .form-signin .form-control:focus {
   z-index: 2;
 }
-.form-signin input[type="email"] {
+/*.form-signin input[type="email"] {
   margin-bottom: -1px;
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
@@ -33,4 +58,4 @@
   margin-bottom: 10px;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
-}
+}*/

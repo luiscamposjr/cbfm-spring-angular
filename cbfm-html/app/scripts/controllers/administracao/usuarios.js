@@ -10,13 +10,6 @@ angular.module(GLOBAL.nameApp)
 		$scope.selectedRow = {};
 		$scope.itemsList = [];
 		$scope.filterDTO = {};
-
-		$scope.clubes = [];
-		$scope.federacoes = [];
-		$scope.atletas = [];
-
-		$scope.dataDefault = "19/06/1985";
-
 		
 		
 		$scope.init = function () {
@@ -38,7 +31,7 @@ angular.module(GLOBAL.nameApp)
 
 			$scope.clearAll();
 
-			usuariosService.usuariosResource().query().$promise
+			usuariosService.usuariosResource().query({username: $scope.filterDTO.username, email: $scope.filterDTO.email}).$promise
 					.then(function (response) {
 			          	$scope.itemsList = response;
 			        }).catch(function(response) {
@@ -91,7 +84,7 @@ angular.module(GLOBAL.nameApp)
 
 		$scope.saveItem = function() {
 
-			console.log($scope.selectedRow.federacao);
+			console.log($scope.selectedRow);
 
 			if($scope.selectedRow.id !== undefined && $scope.selectedRow.id > 0) {
 
@@ -99,7 +92,7 @@ angular.module(GLOBAL.nameApp)
 				{
 
 						usuariosService.usuariosResource(headers).update(
-							{id: $scope.selectedRow.id, nome: $scope.selectedRow.nome, cnpj: $scope.selectedRow.cnpj, email: $scope.selectedRow.email, responsavel: $scope.selectedRow.responsavel, ativo: $scope.selectedRow.ativo, federacao: { id: $scope.selectedRow.federacao } })
+							{id: $scope.selectedRow.id, username: $scope.selectedRow.username, password: $scope.selectedRow.password, email: $scope.selectedRow.email})
 						.$promise.then(function () {
 							toaster.pop('info', 'Atenção', 'Item atualizado com sucesso.', 3000);
 							$scope.showForm = false;
@@ -116,7 +109,7 @@ angular.module(GLOBAL.nameApp)
 				{
 
 						usuariosService.usuariosResource(headers).post(
-							{id: $scope.selectedRow.id, nome: $scope.selectedRow.nome, cnpj: $scope.selectedRow.cnpj, email: $scope.selectedRow.email, responsavel: $scope.selectedRow.responsavel, ativo: $scope.selectedRow.ativo, federacao: { id: $scope.selectedRow.federacao } })
+							{id: $scope.selectedRow.id, username: $scope.selectedRow.username, password: $scope.selectedRow.password, email: $scope.selectedRow.email})
 						.$promise.then(function () {
 							toaster.pop('info', 'Atenção', 'Item adicionado com sucesso.', 3000);
 							$scope.showForm = false;

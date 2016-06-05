@@ -28,11 +28,11 @@
     <!-- Menu -->
     <!-- <navegacao></navegacao> -->
 
-    <div class="container gap-top">
+    <div class="container gap-top" ng-controller="IndexController">
       <div ng-view="">
       </div>
 
-      <div data-ng-include="'views/workspace/header/header.html'"></div>
+      <div ng-if="isAuthenticated" data-ng-include="'views/workspace/header/header.html'"></div>
     </div>
 
 
@@ -70,7 +70,8 @@
         <script src="scripts/controllers/administracao/clubes.js"></script>
         <script src="scripts/controllers/administracao/atletas.js"></script>
         <script src="scripts/controllers/administracao/usuarios.js"></script>
-        <script src="scripts/controllers/login/login.js"></script>
+        <script src="scripts/controllers/auth/auth.js"></script>
+        <script src="scripts/controllers/workspace/index.js"></script>
 
         <!-- Directives -->
         <script src="scripts/directives/navegacao.js"></script>
@@ -81,7 +82,7 @@
         <script src="scripts/services/administracao/atletasService.js"></script> 
         <script src="scripts/services/administracao/usuariosService.js"></script> 
 
-        <script src="scripts/services/login/loginService.js"></script>
+        <script src="scripts/services/auth/authService.js"></script>
         <script src="scripts/services/security/Cookies.js"></script>
         <script src="scripts/services/security/Csrf.js"></script>
         <script src="scripts/util/CONST_UTIL.js"></script>
