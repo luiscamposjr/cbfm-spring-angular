@@ -10,9 +10,6 @@ angular.module(GLOBAL.nameApp).factory("authService", function ($http, $resource
 		options: {method: 'OPTIONS', cache: false}
 	});
 
-	// var userResources = $resource('http://localhost:8080/user', {}, {
-	// });
-
 	/**
 	 * Detect whether the response elements returned indicate an invalid or missing CSRF token...
 	 */
@@ -100,7 +97,6 @@ angular.module(GLOBAL.nameApp).factory("authService", function ($http, $resource
 		}).catch(function() {
 			toaster.pop('error', 'Atenção', 'Não foi possível a conexão com o servidor.', 3000);
 		});
-
 
     };
 

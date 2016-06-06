@@ -10,23 +10,21 @@ angular.module(GLOBAL.nameApp)
 		var init = function() {
 
 			isLoggedIn();
-
+			//TODO se for null tem que chamar de novo e carregar
 			$rootScope.currentUser = angular.isDefined(sessionStorage.currentUser) ? JSON.parse(sessionStorage.currentUser) : null;
 
-			console.log($rootScope.currentUser.authorities);
 		};
 
-
 		var isLoggedIn = function(){	
-
-	    authService.currentUser().then(
-	    	function successCallback() {
-				$rootScope.isAuthenticated = true;
-		  }, function errorCallback() {
-			  	$rootScope.isAuthenticated = false;
-			  	sessionStorage.currentUser = null;
-			  	$location.url('/login');
-		  });
+			
+		    authService.currentUser().then(
+		    	function successCallback() {
+					$rootScope.isAuthenticated = true;
+			  }, function errorCallback() {
+				  	$rootScope.isAuthenticated = false;
+				  	sessionStorage.currentUser = null;
+				  	$location.url('/login');
+			  });
 		};
 
 		init();
